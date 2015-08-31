@@ -53,6 +53,12 @@ genotypes_plot <- function(mat,tit) {
   barplot(cStop, main = tit, las = 3, cex.names = 0.8, col = (brewer.pal(12,name = 'Set3')))
 }
 
+all_genotypes_plot <- function(mat,tit) {
+  cS <- colSums(mat)
+  barplot(cS, main = tit, las = 3, cex.names = 0.8, col = "gray")
+}
+
+
 run_bs_subj_adonis <-function(df,bs_vec,subj_vec) {
   #runs a eset of adonis comparisons
   #df is a dataframe of distances
@@ -81,7 +87,6 @@ run_bs_subj_adonis <-function(df,bs_vec,subj_vec) {
 
 make_subtype_matrix <-function(df) {
   library(dplyr)
-  check_staph_df(df)
   mat <- select(df,matches("CC")) %>% as.matrix
   assert_that(dim(mat)[2] == 32)
   return(mat)
@@ -208,4 +213,22 @@ merge_CCs <- function(in_data,CC) {
   in_data <- mutate(in_data,temp = new_col)
   names(in_data)[names(in_data) == 'temp'] <- CC
   return(in_data)
+}
+
+plot_CC_types <-function(CC, CCcol = "red", mat, SRA_file, map11, map10, plotdir) {
+  library(RgoogleMaps)
+  crows <- which(mat[[CC]] > 0)
+  cruns <-select(mat, Run) %>% slice(crows) 
+ 
+  CC_df <- inner_join(SRA_file, cruns, by = "Run") %>% select(Latitude,Logitude)
+  
+  plotname <- paste(plotdir,CC,"_z11.png",sep= "", collapse = "")
+  png(plotname,width=640, height =640, res = 75)
+  PlotOnStaticMap(map11, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = CCcol)
+  dev.off()
+  
+  plotname <- paste(plotdir,CC,"_z10.png",sep= "", collapse = "")
+  png(plotname,width=640, height =640, res = 75)
+  PlotOnStaticMap(map10, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = CCcol)
+  dev.off()
 }

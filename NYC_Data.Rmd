@@ -1,0 +1,138 @@
+---
+title: "NYC Data analysis"
+author: "Tim Read"
+date: "August 31, 2015"
+output: html_document
+---
+
+Analysis of NYC subway data.  Based on a script called 'NYsubwaySa.R'.
+
+```{r}
+print(date())
+library(RgoogleMaps)
+library(dplyr)
+library(vegan)
+library(ade4)
+library(e1071)
+library(gtools)
+#library(biomod2)
+library(RColorBrewer)
+source('./staph_metagenome_tools.R')
+```
+
+### Load files
+
+```{r, }
+#Public data from the original NYC subway publication: Afshinnekoo E, Meydan C, Chowdhury S, Jaroudi D, Boyer C, Bernstein N, Maritz JM, Reeves D, Gandara J, Chhangawala S, Ahsanuddin S, Simmons A, Nessel T, Sundaresh B, Pereira E, Jorgensen E, Kolokotronis S-O, Kirchberger N, Garcia I, Gandara D, Dhanraj S, Nawrin T, Saletore Y, Alexander N, Vijay P, Hénaff EM, Zumbo P, Walsh M, O’Mullan GD, Tighe S, Dudley JT, Dunaif A, Ennis S, O’Halloran E, Magalhaes TR, Boone B, Jones AL, Muth TR, Paolantonio KS, Alter E, Schadt EE, Garbarino J, Prill RJ, Carlton JM, Levy S, Mason CE. Geospatial Resolution of Human and Bacterial Diversity with City-Scale Metagenomics. Cell Systems [Internet]. Elsevier; 2015 Jul 29;1(1):72–87.
+NYCdata <- (read.csv("./Data/DataTable5-metaphlan-metadata_v19 .csv",stringsAsFactors = FALSE, header = TRUE))[1:4]
+# we made this table from parsing the SRA
+strain_SRA <- read.table("./Data/runs-to-samples.txt", header = TRUE)
+colnames(strain_SRA) <- c("Run", "Sample.ID") #to make join easier
+NYCdata_SRA <- left_join(NYCdata, strain_SRA, by = "Sample.ID")
+#Our table of binstrain results
+Staph_betas <- read.csv("./Data/Final_Beta_NYC_STAPH.csv",stringsAsFactors = FALSE, header = TRUE)
+
+```
+### merge CC, rename and tidy.  
+
+(Same pathway as HMP_coverage.Rmd).  Need to merge becasue we originally separated CC30, CC8 and CC5 into multiple groups but this turned out not to be specific.
+
+```{r}
+Staph_betas <- merge_CCs(Staph_betas,"CC_8_")
+Staph_betas <- merge_CCs(Staph_betas,"CC_30_")
+Staph_betas <- merge_CCs(Staph_betas,"CC_5_")
+
+names(Staph_betas)[names(Staph_betas) == "MLST_93"] <- "CC_93"
+Staph_betas <- Staph_betas[,mixedsort(colnames(Staph_betas))]
+colnames(Staph_betas) <- gsub("(CC_.{0,3})_.{0,4}$","\\1",colnames(Staph_betas))
+
+```
+
+### genotype plots
+
+```{r}
+staph_mat <- make_subtype_matrix(Staph_betas)
+presence_mat <- as.data.frame(bintr(staph_mat,0.2))
+top_score_mat <- as.data.frame(bintr(staph_mat,0.5))
+# png("~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_barchart.png",width=640, height =640, res = 75)
+# dev.off()
+all_genotypes_plot(presence_mat,"All NYC samples, subtypes present > 0.2")
+all_genotypes_plot(top_score_mat,"All NYC samples, subtypes present > 0.5")
+```
+
+### Color stations reporting S. aureus
+```{r}
+locations_with_runs <- filter(NYCdata_SRA, !is.na(Run) ) %>%
+  select(Latitude, Logitude)
+
+lats <- as.numeric(as.character(locations_with_runs$Latitude))
+lons <- as.numeric(as.character(locations_with_runs$Logitude))
+cols_staph <- rep(NULL,length(lats))
+#all the statiitons which had S. aureus
+cols_staph[which(NYCdata_SRA$Run %in% Staph_betas$Run)] <- "red"
+
+alllats <- as.numeric(as.character(NYCdata$Latitude)) #every non-numeric value is converted to NA
+alllons <- as.numeric(as.character(NYCdata$Logitude))
+```
+### Generate google maps
+```{r}
+gmap1 <- GetMap(center = c(lat = 40.7127, lon = -74.0059), size = c(640, 640), zoom = 11, GRAYSCALE = TRUE)
+#centered on Queens
+gmap2 <- GetMap(center = c(lat = 40.7500, lon = -73.8667), size = c(640, 640), zoom = 11, GRAYSCALE = TRUE)
+gmap3 <- GetMap(center = c(lat = 40.7500, lon = -73.8667), size = c(640, 640), zoom = 10, GRAYSCALE = TRUE)
+```
+### Make plots of overall coverage
+ 
+```{r}
+png("./NYC_subway_plots/all_stations_z11.png",width=640, height =640, res = 75)
+PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")
+dev.off()
+
+png("./NYC_subway_plots/all_stations_z10.png",width=640, height =640, res = 75)
+PlotOnStaticMap(gmap3, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")
+dev.off()
+
+png("./NYC_subway_plots/all_staph_z11.png",width=640, height =640, res = 75)
+PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = cols_staph)
+dev.off()
+
+png("./NYC_subway_plots/all_staph_z10.png",width=640, height =640, res = 75)
+PlotOnStaticMap(gmap3, lat = lats , lon = lons, cex=1.5,pch=20, col = cols_staph)
+dev.off()
+```
+
+### PLot each CC type
+
+```{r}
+for (i in colnames(Staph_betas)){
+  if(i != "Run" && as.numeric(sum(Staph_betas[[i]])) > 0){
+    plot_CC_types(CC = i, mat = Staph_betas, map10 = gmap3, map11 = gmap2, plotdir = "./NYC_subway_plots/", SRA_file = NYCdata_SRA)
+  }  
+}
+```
+### Mantel test for spatial autocorrelation of Staph aureus genotypes
+
+
+```{r}
+##First get Bray curtis matrix of dissimilarities
+braymat <- vegdist(staph_mat)
+jacmat <- vegdist(staph_mat, method = "jaccard")
+##now get geographical distance
+geogdist_staph <- filter(NYCdata_SRA, Run %in% Staph_betas$Run) %>% select(Latitude,Logitude) %>% dist
+set.seed(45678)
+mantel.rtest(geogdist_staph,braymat,nrepet = 9999)
+
+mantel.rtest(geogdist_staph,jacmat,nrepet = 9999)
+
+
+```
+
+#calculate hamming distances as an alternative using e1071 function
+hammmingmat <- hamming.distance(binmat)
+mantel.rtest(geogdist_staph,as.dist(hammmingmat),nrepet = 9999)
+```{r}
+binmat <- bintr(staph_mat,0.2)
+hammmingmat <- hamming.distance(binmat)
+mantel.rtest(geogdist_staph,as.dist(hammmingmat),nrepet = 9999)
+```
+
