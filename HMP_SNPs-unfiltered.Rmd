@@ -1,0 +1,92 @@
+---
+title: "Rare SNP analysis on HMP unfiltered by coverage"
+author: "Tim Read"
+date: "August 14, 2015"
+output: html_document
+---
+
+##Rare SNPs on unfiltered HMP data
+Pipeline is a bit messy but should be OK for now. Originally developed in HMP_cooccuance.R.
+
+```{r}
+print(date())
+library(reshape2)
+library(dplyr)
+library(gdata)
+library(gtools)
+source('./staph_metagenome_tools.R')
+```
+
+Read in the datframe from the HMP coverage analysis
+
+```{r}
+dat4 <- read.table("./Data/combined")
+#dat4 has no meaning, just a temporary name 
+```
+
+Create co-occurence table 
+```{r}
+#analysis of rare snps
+multiSubjects <- count(dat4,Subject.Id) %>% filter(n > 1) %>% select(Subject.Id )
+dat <- read.table("./Data/med_freq_snps.table", header = FALSE)
+dat <- filter(dat,V2 %in% dat4$Sample.Id)
+u <- create_cooccur_mat(dat) #slooow
+u.hits <- calc_hits(colnames(u),u)
+```
+
+Rest of the pipeline.  Bit of a mess but it provides results.
+####co-occurrence of rare SNPs within body sites
+```{r}
+
+bs <- levels(dat4$Body.site)
+for (i in bs) {
+      bss_rows <- which(dat4$Body.site == i)
+      if (length(bss_rows) > 3) {
+      bss_samples <- slice(dat4,bss_rows)$Sample.Id %>% as.character()
+      u.subset <- which(colnames(u) %in% bss_samples)
+      print(i)
+      FM_res <- calc_FTS(u.hits,calc_hits(bss_samples,u))
+      print(FM_res)
+      cat("\n")
+    }
+    else {
+      cat("Less than 4 samples in ", i, "\n\n")
+      }
+  }
+
+
+```
+###Fisher test for enrichment of rare SNPs within different body sites of the same subjects
+```{r}
+sub.hits = 0
+sub.nohits = 0
+for (i in multiSubjects$Subject.Id) {
+  sub <- filter(dat4, Subject.Id == as.character(i))$Sample.Id %>% as.character()
+  #missing expression
+  subres <- calc_hits(sub,u)
+  sub.hits <- subres[1] + sub.hits
+  sub.nohits <- subres[2] + sub.nohits
+}
+calc_FTS(u.hits,c(sub.hits,sub.nohits))
+
+
+
+```
+###rare SNP enrichment between specific pairs of sites
+```{r}
+###At the moment I need to carefully test and debug the function that produces the matrix.  Discounting for now
+multiBodySite <- count(dat4,Body.site) %>% filter(n > 8) %>% select(Body.site)
+lmbs <- levels(multiBodySite$Body.site)
+pers <- combinations(length(lmbs),2,lmbs)
+for (i in 1:(nrow(pers))) {
+  print(intra_body_FTS(pers[i,1],pers[i,2],dat4,multiSubjects,u))
+}
+
+```
+
+
+###Session info
+```{r}
+sessionInfo()
+```
+
