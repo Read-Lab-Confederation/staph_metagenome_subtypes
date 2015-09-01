@@ -59,9 +59,11 @@ presence_mat <- as.data.frame(bintr(dat5,0.2))
 top_score_mat <- as.data.frame(bintr(dat5,0.5))
 # png("~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_barchart.png",width=640, height =640, res = 75)
 # dev.off()
-genotypes_plot(presence_mat,"All samples, subtypes present > 0.2")
-genotypes_plot(top_score_mat,"All samples, subtypes present > 0.5")
+genotypes_plot(presence_mat,"All CCs, subtypes present > 0.2")
+genotypes_plot(top_score_mat,"All CCs, subtypes present > 0.5")
 
+all_genotypes_plot(presence_mat,"All CCs, subtypes present > 0.2")
+all_genotypes_plot(top_score_mat,"All CCs, subtypes present > 0.5")
 for (i in bs) {
   bss_rows <- which(dat4$Body.site == i)
   if(length(bss_rows) > 0) {

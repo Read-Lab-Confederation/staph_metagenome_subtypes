@@ -63,6 +63,8 @@ top_score_mat <- as.data.frame(bintr(dat5,0.5))
 # dev.off()
 genotypes_plot(presence_mat,"All samples, subtypes present > 0.2")
 genotypes_plot(top_score_mat,"All samples, subtypes present > 0.5")
+all_genotypes_plot(presence_mat,"All CCs, 0.5X cutoff, subtypes present > 0.2")
+all_genotypes_plot(top_score_mat,"All CCs, 0.5X cutoff, subtypes present > 0.5")
 
 for (i in bs) {
   bss_rows <- which(dat4$Body.site == i)

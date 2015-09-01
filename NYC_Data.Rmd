@@ -17,6 +17,7 @@ library(e1071)
 library(gtools)
 #library(biomod2)
 library(RColorBrewer)
+library(assertthat)
 source('./staph_metagenome_tools.R')
 ```
 
@@ -31,7 +32,8 @@ colnames(strain_SRA) <- c("Run", "Sample.ID") #to make join easier
 NYCdata_SRA <- left_join(NYCdata, strain_SRA, by = "Sample.ID")
 #Our table of binstrain results
 Staph_betas <- read.csv("./Data/Final_Beta_NYC_STAPH.csv",stringsAsFactors = FALSE, header = TRUE)
-
+#remove the final row, which is actually a bead wash control (suggests some carrover contamination)
+Staph_betas <- Staph_betas[-130,]
 ```
 ### merge CC, rename and tidy.  
 
@@ -118,7 +120,7 @@ for (i in colnames(Staph_betas)){
 braymat <- vegdist(staph_mat)
 jacmat <- vegdist(staph_mat, method = "jaccard")
 ##now get geographical distance
-geogdist_staph <- filter(NYCdata_SRA, Run %in% Staph_betas$Run) %>% select(Latitude,Logitude) %>% dist
+geogdist_staph <- inner_join(NYCdata_SRA, Staph_betas, by = "Run") %>% select(Latitude,Logitude) %>% dist
 set.seed(45678)
 mantel.rtest(geogdist_staph,braymat,nrepet = 9999)
 
@@ -127,12 +129,18 @@ mantel.rtest(geogdist_staph,jacmat,nrepet = 9999)
 
 ```
 
-#calculate hamming distances as an alternative using e1071 function
-hammmingmat <- hamming.distance(binmat)
-mantel.rtest(geogdist_staph,as.dist(hammmingmat),nrepet = 9999)
+### calculate hamming distances as an alternative using e1071 function
+
 ```{r}
 binmat <- bintr(staph_mat,0.2)
-hammmingmat <- hamming.distance(binmat)
-mantel.rtest(geogdist_staph,as.dist(hammmingmat),nrepet = 9999)
+hammmingmat <- hamming.distance(binmat) %>% dist()
+mantel.rtest(geogdist_staph,hammmingmat,nrepet = 9999)
 ```
+
+### session info
+
+```{r}
+sessionInfo()
+```
+
 
