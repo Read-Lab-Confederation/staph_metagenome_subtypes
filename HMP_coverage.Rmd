@@ -45,6 +45,8 @@ dat4 <- filter(dat3,!(Sample.Id %in% missing_samples))
 
 
 combined <- inner_join(mapping,dat4,by = c("Sample_id" = "Sample.Id"))
+#remove duplicated records
+combined <- combined[-c(46,95,96),]
 colnames(combined)[which(colnames(combined) == "Body_Site")] <-  "Body.site"
 colnames(combined)[which(colnames(combined) == "Sample_id")]  <- "Sample.Id"
 combined$Body.site <- as.factor(combined$Body.site)
