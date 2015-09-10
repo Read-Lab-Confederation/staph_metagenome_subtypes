@@ -19,6 +19,7 @@ library(gtools)
 library(RColorBrewer)
 library(assertthat)
 source('./staph_metagenome_tools.R')
+
 ```
 
 ### Load files
@@ -120,7 +121,10 @@ for (i in colnames(Staph_betas)){
 braymat <- vegdist(staph_mat)
 jacmat <- vegdist(staph_mat, method = "jaccard")
 ##now get geographical distance
-geogdist_staph <- inner_join(NYCdata_SRA, Staph_betas, by = "Run") %>% select(Latitude,Logitude) %>% dist
+
+points_staph <- inner_join(NYCdata_SRA, Staph_betas, by = "Run") %>% select(Logitude,Latitude) 
+points_staph <- points_staph[-32,]#row 32 is mislabeled
+geogdist_staph <- dist(points_staph)
 set.seed(45678)
 mantel.rtest(geogdist_staph,braymat,nrepet = 9999)
 
@@ -136,6 +140,19 @@ binmat <- bintr(staph_mat,0.2)
 hammmingmat <- hamming.distance(binmat) %>% dist()
 mantel.rtest(geogdist_staph,hammmingmat,nrepet = 9999)
 ```
+
+#functions for looking at geog distance
+```{r}
+NYC_CC8 <- inner_join(NYCdata_SRA, Staph_betas, by = "Run") %>% filter(CC_8 > .8) %>% select(Logitude,Latitude)
+avg_geog_dist(NYC_CC8)
+set.seed(45345)
+rand_dists <- rand_distances(nrow(NYC_CC8),points_staph,1000)
+ecdf(rand_dists)(avg_geog_dist(NYC_CC8))
+
+
+```
+
+
 
 ### session info
 

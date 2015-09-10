@@ -232,3 +232,37 @@ plot_CC_types <-function(CC, CCcol = "red", mat, SRA_file, map11, map10, plotdir
   PlotOnStaticMap(map10, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = CCcol)
   dev.off()
 }
+
+avg_geog_dist <- function(p){
+  mat <- as.data.frame(combinations(nrow(p),2))
+  dist_vec <- sapply(1:nrow(mat), function(x) distance.chord(as.numeric(p[mat[x,1],]),as.numeric(p[mat[x,2],])))
+  return(mean(dist_vec))
+}
+
+rand_distances <- function(n,latlon,perms = 1000) {
+  res_vec <- replicate(perms,avg_geog_dist(sample_n(latlon,n)),simplify = "vector")
+  return(res_vec)
+  
+}
+
+#below from http://www.biostat.umn.edu/~sudiptob/Software/distonearth.R
+distance.chord <- function(point1,point2){
+  
+  R <- 6371
+  
+  p1rad <- point1 * pi/180
+  p2rad <- point2 * pi/180
+  
+  lat <- p1rad[2]
+  lon <- p1rad[1]
+  
+  u1 <- c(cos(lat)*cos(lon), cos(lat)*sin(lon), sin(lat))
+  
+  lat <- p2rad[2]
+  lon <- p2rad[1]
+  
+  u2 <- c(cos(lat)*cos(lon),cos(lat)*sin(lon),sin(lat))
+  
+  R*sqrt(sum((u1-u2)^2))
+  
+}
