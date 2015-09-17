@@ -165,6 +165,10 @@ for (i in colnames(staph_df)[1:32]){
 
 CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_8", cutoff = 0.2, s = 345, reps= 1000)
 CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_30", cutoff = 0.2, s = 4564, reps= 1000)
+CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_5", cutoff = 0.2, s = 23, reps= 1000)
+CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_45", cutoff = 0.2, s = 455, reps= 1000)
+CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_15", cutoff = 0.2, s = 989, reps= 1000)
+CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_1", cutoff = 0.2, s = 467856765, reps= 1000)
 ```
 
 

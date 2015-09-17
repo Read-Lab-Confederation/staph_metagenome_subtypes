@@ -70,7 +70,7 @@ img {
 
 <p>Analysis of NYC subway data. Based on a script called ‘NYsubwaySa.R’.</p>
 <pre class="r"><code>print(date())</code></pre>
-<pre><code>## [1] &quot;Thu Sep 17 11:45:03 2015&quot;</code></pre>
+<pre><code>## [1] &quot;Thu Sep 17 14:19:58 2015&quot;</code></pre>
 <pre class="r"><code>library(RgoogleMaps)
 library(dplyr)</code></pre>
 <pre><code>## 
@@ -244,6 +244,18 @@ dev.off()</code></pre>
 <pre class="r"><code>CC_geog_perm_test(SRA_file = staph_df_coords, CC = &quot;CC_30&quot;, cutoff = 0.2, s = 4564, reps= 1000)</code></pre>
 <pre><code>## Av geog. distance of  CC_30  =  7.819078 
 ## Quartile of random distribution of dists  0.203</code></pre>
+<pre class="r"><code>CC_geog_perm_test(SRA_file = staph_df_coords, CC = &quot;CC_5&quot;, cutoff = 0.2, s = 23, reps= 1000)</code></pre>
+<pre><code>## Av geog. distance of  CC_5  =  885.7413 
+## Quartile of random distribution of dists  0.977</code></pre>
+<pre class="r"><code>CC_geog_perm_test(SRA_file = staph_df_coords, CC = &quot;CC_45&quot;, cutoff = 0.2, s = 455, reps= 1000)</code></pre>
+<pre><code>## Av geog. distance of  CC_45  =  8.472947 
+## Quartile of random distribution of dists  0.471</code></pre>
+<pre class="r"><code>CC_geog_perm_test(SRA_file = staph_df_coords, CC = &quot;CC_15&quot;, cutoff = 0.2, s = 989, reps= 1000)</code></pre>
+<pre><code>## Av geog. distance of  CC_15  =  7.433129 
+## Quartile of random distribution of dists  0.277</code></pre>
+<pre class="r"><code>CC_geog_perm_test(SRA_file = staph_df_coords, CC = &quot;CC_1&quot;, cutoff = 0.2, s = 467856765, reps= 1000)</code></pre>
+<pre><code>## Av geog. distance of  CC_1  =  8.040803 
+## Quartile of random distribution of dists  0.399</code></pre>
 <div id="session-info" class="section level3">
 <h3>session info</h3>
 <pre class="r"><code>sessionInfo()</code></pre>
