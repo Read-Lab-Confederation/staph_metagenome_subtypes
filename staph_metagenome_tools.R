@@ -215,22 +215,23 @@ merge_CCs <- function(in_data,CC) {
   return(in_data)
 }
 
-plot_CC_types <-function(CC, CCcol = "red", mat, SRA_file, map11, map10, plotdir) {
+plot_CC_types <-function(CC, CCcol = "red", mat, SRA_file, map11, map10, plotdir, cutoff = 0.2) {
   library(RgoogleMaps)
-  crows <- which(mat[[CC]] > 0)
-  cruns <-select(mat, Run) %>% slice(crows) 
- 
-  CC_df <- inner_join(SRA_file, cruns, by = "Run") %>% select(Latitude,Logitude)
+  crows <- which(SRA_file[[CC]] > cutoff)
+  #cruns <-select(mat, Run) %>% slice(crows) 
+  if (length(crows) > 0) {
+    CC_df <- slice(SRA_file, crows) %>% select(Latitude,Logitude)
+    plotname <- paste(plotdir,CC,"_z11.png",sep= "", collapse = "")
+    png(plotname,width=640, height =640, res = 75)
+    PlotOnStaticMap(map11, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = CCcol)
+    dev.off()
+    
+    plotname <- paste(plotdir,CC,"_z10.png",sep= "", collapse = "")
+    png(plotname,width=640, height =640, res = 75)
+    PlotOnStaticMap(map10, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = CCcol)
+    dev.off() 
+  }
   
-  plotname <- paste(plotdir,CC,"_z11.png",sep= "", collapse = "")
-  png(plotname,width=640, height =640, res = 75)
-  PlotOnStaticMap(map11, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = CCcol)
-  dev.off()
-  
-  plotname <- paste(plotdir,CC,"_z10.png",sep= "", collapse = "")
-  png(plotname,width=640, height =640, res = 75)
-  PlotOnStaticMap(map10, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = CCcol)
-  dev.off()
 }
 
 avg_geog_dist <- function(p){
@@ -265,4 +266,14 @@ distance.chord <- function(point1,point2){
   
   R*sqrt(sum((u1-u2)^2))
   
+}
+
+CC_geog_perm_test <- function(SRA_file, CC, cutoff, s = 234523, reps= 1000) {
+  crows <- which(SRA_file[[CC]] > cutoff)
+  CC_df <- slice(SRA_file, crows) %>% select(Latitude,Logitude)
+  av_geog <- avg_geog_dist(CC_df)
+  cat("Av geog. distance of ",CC," = ",av_geog,"\n")
+  set.seed(s)
+  rand_dists <- rand_distances(length(crows),select(SRA_file,Latitude,Logitude),reps)
+  cat("Quartile of random distribution of dists ",ecdf(rand_dists)(av_geog),"\n")
 }

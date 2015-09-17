@@ -31,16 +31,28 @@ NYCdata <- (read.csv("./Data/DataTable5-metaphlan-metadata_v19 .csv",stringsAsFa
 strain_SRA <- read.table("./Data/runs-to-samples.txt", header = TRUE)
 colnames(strain_SRA) <- c("Run", "Sample.ID") #to make join easier
 NYCdata_SRA <- left_join(NYCdata, strain_SRA, by = "Sample.ID")
-#Our table of binstrain results
-Staph_betas <- read.csv("./Data/Final_Beta_NYC_STAPH.csv",stringsAsFactors = FALSE, header = TRUE)
-#remove the final row, which is actually a bead wash control (suggests some carrover contamination)
-Staph_betas <- Staph_betas[-130,]
-```
-### merge CC, rename and tidy.  
 
-(Same pathway as HMP_coverage.Rmd).  Need to merge becasue we originally separated CC30, CC8 and CC5 into multiple groups but this turned out not to be specific.
+
+```
 
 ```{r}
+#Our table of binstrain results
+# Staph_betas <- read.csv("./Data/Final_Beta_NYC_STAPH.csv",stringsAsFactors = FALSE, header = TRUE)
+# #remove the final row, which is actually a bead wash control (suggests some carrover contamination)
+# Staph_betas <- Staph_betas[-130,]
+
+
+
+```
+
+### import CC, merge CC, rename and tidy, create various forms of the data to be fed into funciotns 
+(reflects the piecemeal development of the fucnitons over several months with changing specs)
+
+(Note used some similar commands in HMP_coverage.Rmd).  Need to merge becasue we originally separated CC30, CC8 and CC5 into multiple groups but this turned out not to be specific.
+
+```{r}
+Staph_betas <- read.csv("./Data/FInal_NYC_Staph_MecA_Table.csv", stringsAsFactors = FALSE, header = TRUE) %>% filter(Staph_Coverage > 0.025) %>% filter(!(Sample.Id == "SRR1750088")) 
+
 Staph_betas <- merge_CCs(Staph_betas,"CC_8_")
 Staph_betas <- merge_CCs(Staph_betas,"CC_30_")
 Staph_betas <- merge_CCs(Staph_betas,"CC_5_")
@@ -49,12 +61,18 @@ names(Staph_betas)[names(Staph_betas) == "MLST_93"] <- "CC_93"
 Staph_betas <- Staph_betas[,mixedsort(colnames(Staph_betas))]
 colnames(Staph_betas) <- gsub("(CC_.{0,3})_.{0,4}$","\\1",colnames(Staph_betas))
 
+staph_mat <- make_subtype_matrix(Staph_betas)
+
+staph_df <- as.data.frame(staph_mat)
+staph_df <- cbind(staph_df,Staph_betas$Sample.Id)
+colnames(staph_df)[33] <- "Run"
+staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run")
 ```
 
 ### genotype plots
 
 ```{r}
-staph_mat <- make_subtype_matrix(Staph_betas)
+
 presence_mat <- as.data.frame(bintr(staph_mat,0.2))
 top_score_mat <- as.data.frame(bintr(staph_mat,0.5))
 # png("~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_barchart.png",width=640, height =640, res = 75)
@@ -107,49 +125,46 @@ dev.off()
 ### PLot each CC type
 
 ```{r}
-for (i in colnames(Staph_betas)){
-  if(i != "Run" && as.numeric(sum(Staph_betas[[i]])) > 0){
-    plot_CC_types(CC = i, mat = Staph_betas, map10 = gmap3, map11 = gmap2, plotdir = "./NYC_subway_plots/", SRA_file = NYCdata_SRA)
-  }  
+
+for (i in colnames(staph_df)[1:32]){
+    plot_CC_types(CC = i, mat = staph_df, map10 = gmap3, map11 = gmap2, plotdir = "./NYC_subway_plots/", SRA_file = staph_df_coords)
+
 }
+
 ```
 ### Mantel test for spatial autocorrelation of Staph aureus genotypes
 
 
 ```{r}
 ##First get Bray curtis matrix of dissimilarities
-braymat <- vegdist(staph_mat)
-jacmat <- vegdist(staph_mat, method = "jaccard")
-##now get geographical distance
-
-points_staph <- inner_join(NYCdata_SRA, Staph_betas, by = "Run") %>% select(Logitude,Latitude) 
-points_staph <- points_staph[-32,]#row 32 is mislabeled
-geogdist_staph <- dist(points_staph)
-set.seed(45678)
-mantel.rtest(geogdist_staph,braymat,nrepet = 9999)
-
-mantel.rtest(geogdist_staph,jacmat,nrepet = 9999)
-
+# braymat <- vegdist(staph_mat)
+# jacmat <- vegdist(staph_mat, method = "jaccard")
+# ##now get geographical distance
+# 
+# points_staph <- inner_join(NYCdata_SRA, Staph_betas, by = "Run") %>% select(Logitude,Latitude) 
+# points_staph <- points_staph[-32,]#row 32 is mislabeled
+# geogdist_staph <- dist(points_staph)
+# set.seed(45678)
+# mantel.rtest(geogdist_staph,braymat,nrepet = 9999)
+# 
+# mantel.rtest(geogdist_staph,jacmat,nrepet = 9999)
+# 
 
 ```
 
 ### calculate hamming distances as an alternative using e1071 function
 
 ```{r}
-binmat <- bintr(staph_mat,0.2)
-hammmingmat <- hamming.distance(binmat) %>% dist()
-mantel.rtest(geogdist_staph,hammmingmat,nrepet = 9999)
+# binmat <- bintr(staph_mat,0.2)
+# hammmingmat <- hamming.distance(binmat) %>% dist()
+# mantel.rtest(geogdist_staph,hammmingmat,nrepet = 9999)
 ```
 
 #functions for looking at geog distance
 ```{r}
-NYC_CC8 <- inner_join(NYCdata_SRA, Staph_betas, by = "Run") %>% filter(CC_8 > .8) %>% select(Logitude,Latitude)
-avg_geog_dist(NYC_CC8)
-set.seed(45345)
-rand_dists <- rand_distances(nrow(NYC_CC8),points_staph,1000)
-ecdf(rand_dists)(avg_geog_dist(NYC_CC8))
 
-
+CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_8", cutoff = 0.2, s = 345, reps= 1000)
+CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_30", cutoff = 0.2, s = 4564, reps= 1000)
 ```
 
 
