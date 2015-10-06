@@ -1,0 +1,29 @@
+---
+title: "Phylogenetic tree of subtype tested strains"
+author: "Tim Read"
+date: "October 6, 2015"
+output: html_document
+---
+
+```{r}
+source("~/.staphopia_logon.R")
+db <- staphopia_logon()
+library(staphopiaRtools)
+library(assertthat)
+library(IRanges)
+library(Biostrings)
+```
+
+
+```{r}
+strain_tag_df <- read.csv("./Data/strains_used_for_subtype_tests.csv",stringsAsFactors = FALSE, header = TRUE, col.names = c("tags","st"))
+```
+download data
+
+```{r, echo=FALSE}
+sample_tab <- tbl(db,"sample_metadata") %>% select(id,sample_tag)
+selected_samples_tab <- filter(sample_tab,sample_tag %in% strain_tag_df$tags)
+staphopia_alignment_pipeline(db,selected_samples_tab,fasta_file = "~/aligned_subtyping_strains.fasta", ref = "N315") #store locally b/c of file size
+```
+
+
