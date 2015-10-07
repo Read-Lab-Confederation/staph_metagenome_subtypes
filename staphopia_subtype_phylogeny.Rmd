@@ -12,18 +12,45 @@ library(staphopiaRtools)
 library(assertthat)
 library(IRanges)
 library(Biostrings)
+library(phangorn)
+```
+test
+```{r}
+P <- pull_ids(db,project = "PRJNA239001") %>% filter(st_stripped == 105)
+staphopia_alignment_pipeline(db,P,fasta_file = "./aligned_105_CDC.fasta", ref = "N315")
 ```
 
 
+pull list of strains used
 ```{r}
 strain_tag_df <- read.csv("./Data/strains_used_for_subtype_tests.csv",stringsAsFactors = FALSE, header = TRUE, col.names = c("tags","st"))
 ```
 download data
 
-```{r, echo=FALSE}
+```{r, cache=TRUE}
 sample_tab <- tbl(db,"sample_metadata") %>% select(id,sample_tag)
 selected_samples_tab <- filter(sample_tab,sample_tag %in% strain_tag_df$tags)
 staphopia_alignment_pipeline(db,selected_samples_tab,fasta_file = "~/aligned_subtyping_strains.fasta", ref = "N315") #store locally b/c of file size
 ```
 
+make phyDat file and becasue its enormous
+
+```{r, cache = TRUE}
+staph_align <- read.phyDat("~/aligned_subtyping_strains.fasta", format = "fasta", type = "DNA")
+save(staph_align,file = "~/staph_align")
+```
+
+distance matrix 
+```{r, cache = TRUE}
+dm = dist.dna(as.DNAbin(staph_align))
+save(dm,file="~/dm")
+```
+and NJ tree
+
+```{r}
+treeNJ = NJ(dm)
+layout(matrix(c(1,1), 2, 1), height=c(1,2))
+par(mar = c(.1,.1,.1,.1))
+plot(treeNJ, "unrooted", show.tip.label = FALSE)
+```
 
