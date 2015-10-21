@@ -88,7 +88,7 @@ run_bs_subj_adonis <-function(df,bs_vec,subj_vec) {
 make_subtype_matrix <-function(df) {
   library(dplyr)
   mat <- select(df,matches("CC")) %>% as.matrix
-  assert_that(dim(mat)[2] == 32)
+  assert_that(dim(mat)[2] == 33)
   return(mat)
 }
 
@@ -135,7 +135,7 @@ check_staph_df <- function(df){
   library(assertthat)
   assert_that(length(grep("Body.site",colnames(df))) == 1)
   assert_that(length(grep("Subject.Id",colnames(df))) == 1)
-  assert_that(length(grep("CC",colnames(df))) == 32)
+  assert_that(length(grep("CC",colnames(df))) == 33)
 }
 
 subject_perm <- function(df,multiSubjects,hamming_mat){
@@ -151,6 +151,8 @@ subject_perm <- function(df,multiSubjects,hamming_mat){
   }
   dat7 <- lowerTriangle(hamming_mat)
   sub1.perms <- replicate(10000, sum(dat7[sample.int(length(dat7),sub1.cells)]),simplify = 'array')
+  tle <- paste("10,000 samples of",sub1.cells,"random pairs")
+  hist(sub1.perms, xlab = "Hamming scores", main = tle, xlim = c(1400,1700))
   cat("Score for intraperson hits = ",sub1.hits, "\n")
   print("Quartlies for random distribution")
   print(quantile(sub1.perms))

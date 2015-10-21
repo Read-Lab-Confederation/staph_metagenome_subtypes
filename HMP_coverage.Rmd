@@ -29,6 +29,7 @@ mapping <-gs_read(covs)
 ###Import the binstrain data, merge, clean and harmonize colnames
 ```{r}
 dat3 <- read.csv("./Data/Final_HMP_Matrix.csv", header = TRUE, stringsAsFactors = FALSE)
+colnames(dat3)[colnames(dat3) == "CC_8_72"] <- "CC_72"
 dat3 <- dat3[,-(2:5)] #drop redundant cols
 #merge CC_8, CC_5 and CC_30 together
 dat3 <- merge_CCs(dat3,"CC_8_")

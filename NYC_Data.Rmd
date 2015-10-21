@@ -52,7 +52,7 @@ NYCdata_SRA <- left_join(NYCdata, strain_SRA, by = "Sample.ID")
 
 ```{r}
 Staph_betas <- read.csv("./Data/FInal_NYC_Staph_MecA_Table.csv", stringsAsFactors = FALSE, header = TRUE) %>% filter(Staph_Coverage > 0.025) %>% filter(!(Sample.Id == "SRR1750088")) 
-
+colnames(Staph_betas)[colnames(Staph_betas) == "CC_8_72"] <- "CC_72"
 Staph_betas <- merge_CCs(Staph_betas,"CC_8_")
 Staph_betas <- merge_CCs(Staph_betas,"CC_30_")
 Staph_betas <- merge_CCs(Staph_betas,"CC_5_")
@@ -65,7 +65,8 @@ staph_mat <- make_subtype_matrix(Staph_betas)
 
 staph_df <- as.data.frame(staph_mat)
 staph_df <- cbind(staph_df,Staph_betas$Sample.Id)
-colnames(staph_df)[33] <- "Run"
+colnames(staph_df)[34] <- "Run"
+staph_df$Run <- as.factor(staph_df$Run)
 staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run")
 ```
 

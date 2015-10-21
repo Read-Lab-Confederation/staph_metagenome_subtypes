@@ -1,0 +1,22 @@
+---
+title: "PLots for comparison of binstrain and Kraken on synthetic data"
+author: "Tim Read"
+date: "October 21, 2015"
+output: html_document
+---
+
+
+
+```{r}
+library(dplyr)
+pure <- read.csv("./Data/Microbiome_simulation.txt", sep="\t")
+```
+
+
+```{r, echo=FALSE}
+str <- c("CC_239_239","CC_151_151","MLST_93")
+filter(pure, Strain_Name %in% str) %>% group_by(Sample) %>% summarize(1- sum(Estimated_Beta))
+ # microbiome 2 barchart
+barplot((matrix(nrow = 4, ncol = 1,c(0.26,.15,.5,.09))))
+```
+
