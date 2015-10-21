@@ -1,0 +1,83 @@
+---
+title: "Subtyping tree figure"
+author: "Tim Read"
+date: "October 13, 2015"
+output: html_document
+---
+
+
+```{r}
+library(phangorn)
+library(dplyr)
+source('./staph_metagenome_tools.R')
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+strains <- read.csv("./Data/2114_strain_subtypes.csv", header = TRUE, stringsAsFactors = FALSE)
+CCs <- select(strains, Reference.CC) %>% unique() %>% arrange()
+```
+
+Load tree
+
+```{r}
+load("~/dm")
+NJ <- nj(dm)
+plot(NJ, "unrooted", show.tip.label = FALSE)
+```
+ Find and label CC_30 lables
+ 
+ Run major groups with beta cutoff of .65
+```{r}
+decorate_staph_tree("CC_30",NJ,strains)
+decorate_staph_tree("CC_5_5",NJ,strains)
+decorate_staph_tree("CC_8_",NJ,strains)
+for (i in CCs$Reference.CC){
+  decorate_staph_tree(i,NJ,strains)
+}
+```
+Run major groups with beta cutoff of .80
+```{r}
+decorate_staph_tree("CC_30",NJ,strains, cutoff = 0.8, deco = "blue")
+decorate_staph_tree("CC_5_5",NJ,strains)
+decorate_staph_tree("CC_8_",NJ,strains)
+for (i in CCs$Reference.CC){
+  decorate_staph_tree(i,NJ,strains,cutoff = 0.8, deco = "blue")
+}
+```
+Tree figure for grant
+
+```{r}
+plot(NJ, "unrooted", show.tip.label = FALSE)
+#cc30
+tl <- filter(strains,grepl("CC_30",Reference.CC)) %>% filter(Beta > 0.80) %>% select(Sample.Id.of.0.75X)
+tps <- which(NJ$tip.label %in% tl$Sample.Id.of.0.75X)
+tiplabels(tip = tps, pch= 20, col = "red")
+##CC_5_5
+tl <- filter(strains,grepl("CC_5_5",Reference.CC)) %>% filter(Beta > 0.80) %>% select(Sample.Id.of.0.75X)
+tps <- which(NJ$tip.label %in% tl$Sample.Id.of.0.75X)
+tiplabels(tip = tps, pch= 20, col = "green")
+#st8
+tl <- filter(strains,grepl("CC_8_8_2",Reference.CC)) %>% filter(Beta > 0.80) %>% select(Sample.Id.of.0.75X)
+tps <- which(NJ$tip.label %in% tl$Sample.Id.of.0.75X)
+tiplabels(tip = tps, pch= 20, col = "blue")
+#st75 argentius
+tl <- filter(strains,grepl("CC_75",Reference.CC)) %>% filter(Beta > 0.80) %>% select(Sample.Id.of.0.75X)
+tps <- which(NJ$tip.label %in% tl$Sample.Id.of.0.75X)
+tiplabels(tip = tps, pch= 20, col = "gray")
+#cc133
+tl <- filter(strains,grepl("CC_133",Reference.CC)) %>% filter(Beta > 0.80) %>% select(Sample.Id.of.0.75X)
+tps <- which(NJ$tip.label %in% tl$Sample.Id.of.0.75X)
+tiplabels(tip = tps, pch= 20, col = "orange")
+add.scale.bar()
+```
+Check for senstivity
+
+```{r}
+tl <- filter(strains,Beta > 0.80) %>% select(Sample.Id.of.0.75X)
+plot(NJ, "unrooted", show.tip.label = FALSE, main = "Sensitivity: beta > 0.65")
+tps <- which(NJ$tip.label %in% tl$Sample.Id.of.0.75X)
+tiplabels(tip = tps, pch= 20, col = "red")
+```
+

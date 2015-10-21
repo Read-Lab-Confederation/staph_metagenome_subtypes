@@ -277,3 +277,10 @@ CC_geog_perm_test <- function(SRA_file, CC, cutoff, s = 234523, reps= 1000) {
   rand_dists <- rand_distances(length(crows),select(SRA_file,Latitude,Logitude),reps)
   cat("Quartile of random distribution of dists ",ecdf(rand_dists)(av_geog),"\n")
 }
+
+decorate_staph_tree <- function(CC, tree, strains, cutoff = 0.65, deco = "red"){
+  tag_list <- filter(strains,grepl(CC,Reference.CC)) %>% filter(Beta > cutoff) %>% select(Sample.Id.of.0.75X)
+  tps <- which(tree$tip.label %in% tag_list$Sample.Id.of.0.75X)
+  plot(tree, "unrooted", show.tip.label = FALSE, main = CC)
+  tiplabels(tip = tps, pch= 20, col = deco)
+}

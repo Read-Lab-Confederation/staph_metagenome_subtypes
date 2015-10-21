@@ -52,6 +52,13 @@ colnames(combined)[which(colnames(combined) == "Sample_id")]  <- "Sample.Id"
 combined$Body.site <- as.factor(combined$Body.site)
 combined$Subject.Id <- as.factor(combined$Subject.Id)
 ```
+#plot unflitered coverage
+
+```{r}
+with(mapping, plot(Staph_cov,mecA_cov, log = "x", xlim=c(0.01,20), ylim=c(0,10), ylab = "mecA coverage", xlab = "log(Staph. coverage)", pch = 16))
+
+```
+
 
 ###Filter at two levels of Staph coverage and write files
 ```{r}
