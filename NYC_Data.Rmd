@@ -60,12 +60,12 @@ Staph_betas <- merge_CCs(Staph_betas,"CC_5_")
 names(Staph_betas)[names(Staph_betas) == "MLST_93"] <- "CC_93"
 Staph_betas <- Staph_betas[,mixedsort(colnames(Staph_betas))]
 colnames(Staph_betas) <- gsub("(CC_.{0,3})_.{0,4}$","\\1",colnames(Staph_betas))
-
+colnames(Staph_betas)[colnames(Staph_betas) == "Sample.Id"] <- "Run"
 staph_mat <- make_subtype_matrix(Staph_betas)
 
 staph_df <- as.data.frame(staph_mat)
-staph_df <- cbind(staph_df,Staph_betas$Sample.Id)
-colnames(staph_df)[34] <- "Run"
+staph_df <- cbind(staph_df,Staph_betas$Run)
+colnames(staph_df)[colnames(staph_df) == "Staph_betas$Run"] <- "Run"
 staph_df$Run <- as.factor(staph_df$Run)
 staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run")
 ```
