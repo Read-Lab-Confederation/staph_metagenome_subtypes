@@ -286,3 +286,11 @@ decorate_staph_tree <- function(CC, tree, strains, cutoff = 0.65, deco = "red"){
   plot(tree, "unrooted", show.tip.label = FALSE, main = CC)
   tiplabels(tip = tps, pch= 20, col = deco)
 }
+
+dist_between_stations <- function(pairs,geog.mat){
+  #pairs are piars of points
+  #geor mat contains cols with point,longditude, latitue
+  p1 <- filter(geog.mat,Run == pairs[1]) %>% select(Logitude,Latitude) %>% t() %>% as.vector() %>% as.numeric()
+  p2 <- filter(geog.mat,Run == pairs[2]) %>% select(Logitude,Latitude) %>% t() %>% as.vector() %>% as.numeric()
+  return(distance.chord(p1,p2))
+}

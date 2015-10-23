@@ -67,7 +67,8 @@ staph_df <- as.data.frame(staph_mat)
 staph_df <- cbind(staph_df,Staph_betas$Run)
 colnames(staph_df)[colnames(staph_df) == "Staph_betas$Run"] <- "Run"
 staph_df$Run <- as.factor(staph_df$Run)
-staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run")
+staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run") #one of the samples does not have a lat , lon posiiotn
+coords_df_subtype_mat <- make_subtype_matrix(staph_df_coords)
 ```
 
 ### genotype plots
@@ -156,9 +157,13 @@ for (i in colnames(staph_df)[1:32]){
 ### calculate hamming distances as an alternative using e1071 function
 
 ```{r}
-# binmat <- bintr(staph_mat,0.2)
-# hammmingmat <- hamming.distance(binmat) %>% dist()
+binmat <- bintr(coords_df_subtype_mat,0.2)
+#hammmingmat <- hamming.distance(binmat)
+bin_df <- as.data.frame(cbind(staph_df_coords$Run,binmat))
+colnames(bin_df)[1] <- "Run"
 # mantel.rtest(geogdist_staph,hammmingmat,nrepet = 9999)
+run_geog <- select(staph_df_coords,Run, Latitude, Logitude)
+combs <- combinations(r=2,v=run_geog$Run, n = length(run_geog$Run))
 ```
 
 #functions for looking at geog distance
