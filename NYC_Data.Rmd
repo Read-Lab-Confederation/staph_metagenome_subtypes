@@ -61,6 +61,8 @@ names(Staph_betas)[names(Staph_betas) == "MLST_93"] <- "CC_93"
 Staph_betas <- Staph_betas[,mixedsort(colnames(Staph_betas))]
 colnames(Staph_betas) <- gsub("(CC_.{0,3})_.{0,4}$","\\1",colnames(Staph_betas))
 colnames(Staph_betas)[colnames(Staph_betas) == "Sample.Id"] <- "Run"
+#remove SRR1748847, which has an incorrect coord
+Staph_betas <- filter(Staph_betas, Run != "SRR1748847")
 staph_mat <- make_subtype_matrix(Staph_betas)
 
 staph_df <- as.data.frame(staph_mat)
@@ -68,6 +70,7 @@ staph_df <- cbind(staph_df,Staph_betas$Run)
 colnames(staph_df)[colnames(staph_df) == "Staph_betas$Run"] <- "Run"
 staph_df$Run <- as.factor(staph_df$Run)
 staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run") #one of the samples does not have a lat , lon posiiotn
+
 coords_df_subtype_mat <- make_subtype_matrix(staph_df_coords)
 ```
 
@@ -164,9 +167,20 @@ colnames(bin_df)[1] <- "Run"
 # mantel.rtest(geogdist_staph,hammmingmat,nrepet = 9999)
 run_geog <- select(staph_df_coords,Run, Latitude, Logitude)
 combs <- combinations(r=2,v=run_geog$Run, n = length(run_geog$Run))
+geog_distance_vector <- sapply(1:nrow(combs), function(x) dist_between_stations(combs[x,],run_geog))
+hamm_distance_vector <- sapply(1:nrow(combs), function(x) H_distance_between_stations(combs[x,],bin_df))
+#some were taken from the same location - need to filter these out
+
+hist(geog_distance_vector)
+hist(hamm_distance_vector)
+boxplot(geog_distance_vector ~ hamm_distance_vector, xlab = "Hamming distance", ylab = "km")
+#try regression
+reg <- lm(geog_distance_vector ~ as.numeric(hamm_distance_vector))
+abline(reg, col = "red")
+summary(reg)
 ```
 
-#functions for looking at geog distance
+#functions for looking at geog distance of individual subtypes by permutation
 ```{r}
 
 CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_8", cutoff = 0.2, s = 345, reps= 1000)

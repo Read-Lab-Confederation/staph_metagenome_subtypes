@@ -288,9 +288,15 @@ decorate_staph_tree <- function(CC, tree, strains, cutoff = 0.65, deco = "red"){
 }
 
 dist_between_stations <- function(pairs,geog.mat){
-  #pairs are piars of points
+  #pairs are pairs of points
   #geor mat contains cols with point,longditude, latitue
   p1 <- filter(geog.mat,Run == pairs[1]) %>% select(Logitude,Latitude) %>% t() %>% as.vector() %>% as.numeric()
   p2 <- filter(geog.mat,Run == pairs[2]) %>% select(Logitude,Latitude) %>% t() %>% as.vector() %>% as.numeric()
   return(distance.chord(p1,p2))
+}
+
+H_distance_between_stations <- function(pairs,mat){
+  h1 <- filter(mat,Run == pairs[1])[,2:ncol(mat)] %>% t() %>% as.vector()
+  h2 <- filter(mat,Run == pairs[2])[,2:ncol(mat)] %>% t() %>% as.vector()
+  return(hamming.distance(h1,h2))
 }
