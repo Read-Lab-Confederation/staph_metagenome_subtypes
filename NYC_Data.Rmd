@@ -5,7 +5,7 @@ date: "August 31, 2015"
 output: html_document
 ---
 
-Analysis of NYC subway data.  Based on a script called 'NYsubwaySa.R'.
+Analysis of NYC subway data.  Based on a older script called 'NYsubwaySa.R'.
 
 ```{r}
 print(date())
@@ -170,13 +170,15 @@ combs <- combinations(r=2,v=run_geog$Run, n = length(run_geog$Run))
 geog_distance_vector <- sapply(1:nrow(combs), function(x) dist_between_stations(combs[x,],run_geog))
 hamm_distance_vector <- sapply(1:nrow(combs), function(x) H_distance_between_stations(combs[x,],bin_df))
 #some were taken from the same location - need to filter these out
-
-hist(geog_distance_vector)
+zero_stations <- which(geog_distance_vector == 0)
+geog_distance_vector <- geog_distance_vector[-(zero_stations)]
+hamm_distance_vector <- hamm_distance_vector[-(zero_stations)]
+hist(geog_distance_vector, breaks = 50)
 hist(hamm_distance_vector)
 boxplot(geog_distance_vector ~ hamm_distance_vector, xlab = "Hamming distance", ylab = "km")
 #try regression
 reg <- lm(geog_distance_vector ~ as.numeric(hamm_distance_vector))
-abline(reg, col = "red")
+segments(x0=1,x1=7,y0=reg$coefficients[1],y1=reg$coefficients[1]+(reg$coefficients[2]*6), col = "red")
 summary(reg)
 ```
 

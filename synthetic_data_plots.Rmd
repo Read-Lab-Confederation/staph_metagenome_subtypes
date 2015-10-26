@@ -1,5 +1,5 @@
 ---
-title: "PLots for comparison of binstrain and Kraken on synthetic data"
+title: "PLots for comparison of binstrain on synthetic data"
 author: "Tim Read"
 date: "October 21, 2015"
 output: html_document
@@ -9,14 +9,28 @@ output: html_document
 
 ```{r}
 library(dplyr)
+library(RColorBrewer)
 pure <- read.csv("./Data/Microbiome_simulation.txt", sep="\t")
 ```
 
 
 ```{r, echo=FALSE}
+#simulation used the old naming schema
 str <- c("CC_239_239","CC_151_151","MLST_93")
+#values for the three introduced components
+filter(pure, Strain_Name %in% str) %>% group_by(Sample)
+#residual beta values
 filter(pure, Strain_Name %in% str) %>% group_by(Sample) %>% summarize(1- sum(Estimated_Beta))
  # microbiome 2 barchart
-barplot((matrix(nrow = 4, ncol = 1,c(0.26,.15,.5,.09))))
+beta_plot <- (matrix(nrow = 4, ncol = 3,c(0.07,0.18,0.59,0.16,0.26,.15,.5,.09,0.56,0.19,0.14,0.11)))
+colnames(beta_plot) <- c("1","2","3")
+rownames <- c("CC_239","CC_151","CC_93", "Other")
+
+```
+```{r simulation barplot}
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+colnames <- brewer.pal(4,"Set1")
+barplot(beta_plot,  ylab = "beta", col = colnames)
+legend("topright", fill = colnames,legend = c("CC_239","CC_151","CC_93", "Other"), inset = c(-0.3,0))
 ```
 

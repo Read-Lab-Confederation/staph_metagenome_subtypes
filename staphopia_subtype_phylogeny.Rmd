@@ -8,7 +8,7 @@ output: html_document
 ```{r}
 source("~/.staphopia_logon.R")
 db <- staphopia_logon()
-library(staphopiaRtools)
+library(staphopiaRtools) 
 library(assertthat)
 library(IRanges)
 library(Biostrings)
@@ -16,8 +16,8 @@ library(phangorn)
 ```
 test
 ```{r}
-P <- pull_ids(db,project = "PRJNA239001") %>% filter(st_stripped == 105)
-staphopia_alignment_pipeline(db,P,fasta_file = "./aligned_105_CDC.fasta", ref = "N315")
+# P <- pull_ids(db,project = "PRJNA239001") %>% filter(st_stripped == 105)
+# staphopia_alignment_pipeline(db,P,fasta_file = "./aligned_105_CDC.fasta", ref = "N315")
 ```
 
 
@@ -33,24 +33,27 @@ selected_samples_tab <- filter(sample_tab,sample_tag %in% strain_tag_df$tags)
 staphopia_alignment_pipeline(db,selected_samples_tab,fasta_file = "~/aligned_subtyping_strains.fasta", ref = "N315") #store locally b/c of file size
 ```
 
-make phyDat file and becasue its enormous
+make phyDat file and becasue it is enormous cache it
 
 ```{r, cache = TRUE}
 staph_align <- read.phyDat("~/aligned_subtyping_strains.fasta", format = "fasta", type = "DNA")
 save(staph_align,file = "~/staph_align")
 ```
 
-distance matrix 
+distance matrix - this takes about 4 hours
 ```{r, cache = TRUE}
 dm = dist.dna(as.DNAbin(staph_align))
 save(dm,file="~/dm")
 ```
 and NJ tree
 
-```{r}
+```{r 2114_strain_NJ_tree}
 treeNJ = NJ(dm)
 layout(matrix(c(1,1), 2, 1), height=c(1,2))
 par(mar = c(.1,.1,.1,.1))
 plot(treeNJ, "unrooted", show.tip.label = FALSE)
+```
+```{r}
+sessionInfo()
 ```
 

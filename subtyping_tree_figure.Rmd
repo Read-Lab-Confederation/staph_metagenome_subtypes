@@ -46,7 +46,7 @@ for (i in CCs$Reference.CC){
   decorate_staph_tree(i,NJ,strains,cutoff = 0.8, deco = "blue")
 }
 ```
-Tree figure for grant
+Decorated tree figure for grant
 
 ```{r}
 plot(NJ, "unrooted", show.tip.label = FALSE)

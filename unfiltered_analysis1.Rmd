@@ -46,7 +46,7 @@ run_bs_subj_adonis(dat8,dat4$Body.site,dat4$Subject.Id)
 ```
 ### Permutation tests
 ```{r}
-#test ffor whether intra-subject distance greater than intersubject
+#test for whether intra-subject distance greater than intersubject
 subject_perm(dat4,multiSubjects,dat6)
 
 #now look at the same test between body sites
