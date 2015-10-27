@@ -1,0 +1,45 @@
+---
+title: "ST398_SNPs"
+author: "Tim Read"
+date: "October 26, 2015"
+output: html_document
+---
+
+
+
+```{r}
+library(dplyr)
+library(testthat)
+library(IRanges)
+library(Biostrings)
+library(staphopiaRtools)
+source("~/.staphopia_logon.R")
+db <- staphopia_logon()
+```
+
+
+```{r, }
+Q <- pull_ids(db,STtype = 398)
+v_tosnp_tab <- tbl(db,"variant_tosnp")
+
+tot_snp_counts <- group_by(v_tosnp_tab,snp_id) %>% summarise(counts = n())
+group_snp_counts <-inner_join(Q,v_tosnp_tab, by = c("id" = "sample_id")) %>% group_by(snp_id) %>% summarise(counts = n())
+diff_tab <- inner_join(tot_snp_counts,group_snp_counts, by = c("snp_id"))
+
+# a second function to process this table of raw data and produce a dataframe
+min_counts <- 2
+max_diff <- 0 #(this allows a number or a percent of strains the SNp does not occur in)
+group_specific_snps <- filter (diff_tab, counts.x == counts.y) %>% filter(counts.y >= min_counts) %>% collect()
+
+hist(group_specific_snps$counts.y)
+group_sp_snp_ids <- as.vector(group_specific_snps$snp_id)
+v_snp <- tbl(db,"variant_snp")
+group_SNP_summary <- filter(v_snp, id %in% group_sp_snp_ids) %>% select(reference_base,alternate_base,reference_position,id) %>% collect()
+
+
+final_SNP_summary <- inner_join(group_SNP_summary,group_specific_snps, by = c("id" = "snp_id")) %>% select(id,counts.y,reference_base,alternate_base,reference_position)
+colnames(final_SNP_summary) <- c("snp_id","counts","reference_base","alternate_base","reference_position")
+write.table(final_SNP_summary,"./Data/ST398_specific_SNPs.tab")
+```
+
+

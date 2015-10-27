@@ -25,3 +25,6 @@ staphopia_subtype_phylogeny.md ~/dm: ./Data/strains_used_for_subtype_tests.csv
 
 subtyping_tree_figure.md: ~/dm ./staph_metagenome_tools.R ./Data/2114_strain_subtypes.csv
 	Rscript -e "library(knitr); knit('subtyping_tree_figure.Rmd')"
+	
+ST398_specific_SNPs.tab ST398-specific-SNPs.md: ~/.staphopia_logon.R
+	Rscript -e "library(knitr); knit('ST398-specific-SNPs.Rmd')"
