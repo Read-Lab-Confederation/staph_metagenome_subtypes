@@ -10,7 +10,7 @@ print(date())
 ```
 
 ```
-## [1] "Thu Oct 22 13:29:29 2015"
+## [1] "Wed Oct 28 14:19:14 2015"
 ```
 
 This workflow combines binstrain and coverage data from our Staph metagenome analysis and produces useful plots.  Also save data tables filtered at two different coverage levels for subsequent analysis in other workflows.
@@ -44,6 +44,7 @@ source('./staph_metagenome_tools.R')
 
 
 ```
+## Auto-refreshing stale OAuth token.
 ## Sheet successfully identifed: "Coverage_Staph_MeCA"
 ```
 
@@ -146,7 +147,7 @@ plot_diversity_vers_cov(cov0.025,"Shannon diversity of calls versus coverage: cu
 ##     permute
 ## 
 ## Loading required package: lattice
-## This is vegan 2.3-1
+## This is vegan 2.3-0
 ```
 
 ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-3.png) 
@@ -275,9 +276,9 @@ sessionInfo()
 ```
 
 ```
-## R version 3.2.2 (2015-08-14)
+## R version 3.2.1 (2015-06-18)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.10.4 (Yosemite)
+## Running under: OS X 10.10.5 (Yosemite)
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -286,15 +287,15 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] vegan_2.3-1        lattice_0.20-33    permute_0.8-4     
-## [4] gtools_3.5.0       assertthat_0.1     dplyr_0.4.3       
+## [1] vegan_2.3-0        lattice_0.20-33    permute_0.8-4     
+## [4] gtools_3.5.0       assertthat_0.1     dplyr_0.4.2       
 ## [7] googlesheets_0.1.0 knitr_1.11        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.1      cluster_2.0.3    xml2_0.1.2       magrittr_1.5    
+##  [1] Rcpp_0.12.0      cluster_2.0.3    xml2_0.1.1       magrittr_1.5    
 ##  [5] MASS_7.3-44      R6_2.1.1         stringr_1.0.0    httr_1.0.0      
-##  [9] tools_3.2.2      parallel_3.2.2   grid_3.2.2       nlme_3.1-122    
+##  [9] tools_3.2.1      parallel_3.2.1   grid_3.2.1       nlme_3.1-122    
 ## [13] mgcv_1.8-7       DBI_0.3.1        lazyeval_0.1.10  digest_0.6.8    
-## [17] Matrix_1.2-2     formatR_1.2.1    curl_0.9.3       evaluate_0.8    
-## [21] stringi_0.5-5    cellranger_1.0.0 methods_3.2.2    jsonlite_0.9.17
+## [17] Matrix_1.2-2     formatR_1.2      curl_0.9.3       evaluate_0.7.2  
+## [21] stringi_0.5-5    cellranger_1.0.0 methods_3.2.1    jsonlite_0.9.16
 ```

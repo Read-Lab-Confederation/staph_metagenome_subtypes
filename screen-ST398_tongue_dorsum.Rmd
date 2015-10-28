@@ -17,18 +17,36 @@ You can also embed plots, for example:
 ```{r, echo=FALSE}
 SNPs <- read.table("./Data/ST398_specific_SNPs.tab")
 pileup_files <- list.files("~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_PROJECT_SHARED/Mpileup_tongue_dorsum/", full.names = T)
-report <- data.frame(Name = character(),Total_bases = integer(),Total_cov = numeric(), ST398_bases = integer(), ST398_cov = numeric())
 
-  for (i in pileup_files) {
-  mpu <- read.table(header = T, i)
-  r <- regexec("SR.*?_",pileup_files[1])
-  SR_name <- regmatches(pileup_files[1],r)
+SR_name <- vector()
+res1 <- vector()
+res2 <- vector()
+res3 <- vector()
+res4 <- vector()
+
+  for (i in 1:length(pileup_files)) {
+  mpu <- read.table(header = T, pileup_files[i])
+  r <- regexec("SR.*?_",pileup_files[i])
+  SR_name[i] <- unlist(regmatches(pileup_files[i],r))
+  SR_name[i] <- gsub("_","",SR_name[i])
   res <- SNPs_in_mpileup(SNPs,mpu)
-  summ_row <- append(SR_name,res)
-  report <- rbind(report,summ_row)
+  res1[i] <- res[1]
+  res2[i] <- res[2]
+  res3[i] <- res[3]
+  res4[i] <- res[4]
 }
 
 
 ```
+putting the table together and  sorting
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+results <- data.frame(stringsAsFactors = FALSE,cbind(SR_name,res1,res2,res3,res4))
+colnames(results) <- c("SR_name","Staph_bases","Staph_median_cov","ST398_specific_bases","ST398_specific_cov")
+combined <- read.table("./Data/combined", stringsAsFactors = FALSE)
+results_comb <- inner_join(results,combined, by = c("SR_name" = "Sample.Id"))
+```
+
+
+
+

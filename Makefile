@@ -1,4 +1,7 @@
 #makefile does not convert reports to html at the moment
+#core analysis
+core: HMP_coverage.md cov0.5X_analysis1.md cov0.025X_analysis1.md unfiltered_analysis1.md NYC_Data.md synthetic_data_plots.md spec_sens_plot.md subtyping_tree_figure.md
+
 HMP_coverage.md: ./Data/Final_HMP_Matrix.csv ./staph_metagenome_tools.R
 	Rscript -e "library(knitr); knit('./HMP_coverage.Rmd')"
 	
@@ -19,7 +22,8 @@ synthetic_data_plots.md: ./Data/Microbiome_simulation.txt
 
 spec_sens_plot.md: 
 	Rscript -e "library(knitr); knit('spec_sens_plot.Rmd')"
-	
+
+#warning: this script takes a day to run and creates a large cache
 staphopia_subtype_phylogeny.md ~/dm: ./Data/strains_used_for_subtype_tests.csv
 	Rscript -e "library(knitr); knit('staphopia_subtype_phylogeny.Rmd')"	
 
@@ -28,3 +32,6 @@ subtyping_tree_figure.md: ~/dm ./staph_metagenome_tools.R ./Data/2114_strain_sub
 	
 ST398_specific_SNPs.tab ST398-specific-SNPs.md: ~/.staphopia_logon.R
 	Rscript -e "library(knitr); knit('ST398-specific-SNPs.Rmd')"
+	
+screen-ST398_tongue_dorsum.md: SNPs-in-mpileup.R ./Data/combined ./Data/ST398_specific_SNPs.tab ~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_PROJECT_SHARED/Mpileup_tongue_dorsum/
+	Rscript -e "library(knitr); knit('screen-ST398_tongue_dorsum.Rmd')"
