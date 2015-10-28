@@ -7,7 +7,7 @@ output: html_document
 Starting form the filtered table from 'HMP_coverage.Rmd'.  Run a series of analysis to look at relationships between body site and subjects.
 
 
-```{r}
+```{r setup}
 print(date())
 library(reshape2)
 #library(igraph)
@@ -23,7 +23,7 @@ source('./staph_metagenome_tools.R', echo=TRUE)
 
 ###Read in data file created in earlier pipeline
 
-```{r}
+```{r rees_covtable}
 dat4 <- read.table("./Data/cov0.025")
 
 ```
@@ -41,13 +41,13 @@ dat8 <- make_subtype_matrix(dat4) %>% hamming.distance %>% data.frame
 ### PERMANOVA
 
 test for significant associations of subtype with with bodysite and subject.  us e Hamming dist. matrix. Two levels, one with a beta cutoff for all samples > 0.2 and one without
-```{r}
+```{r permanova}
 set.seed(344098)
 run_bs_subj_adonis(dat6,dat4$Body.site,dat4$Subject.Id)
 run_bs_subj_adonis(dat8,dat4$Body.site,dat4$Subject.Id)
 ```
 ### Permutation tests
-```{r}
+```{r perm tests}
 #test ffor whether intra-subject distance greater than intersubject
 subject_perm(dat4,multiSubjects,dat6)
 
@@ -56,7 +56,7 @@ bs <- levels(dat4$Body.site)
 by_factor_perm(bs,dat4,dat6)
 ```
 ###Plots of subtype distribution
-```{r}
+```{r genotype_plots}
 presence_mat <- as.data.frame(bintr(dat5,0.2))
 top_score_mat <- as.data.frame(bintr(dat5,0.5))
 # png("~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_barchart.png",width=640, height =640, res = 75)
@@ -72,19 +72,19 @@ for (i in bs) {
   bss_rows <- which(dat4$Body.site == i)
   if(length(bss_rows) > 0) {
     bs_df <- slice(presence_mat,bss_rows)
-    genotypes_plot(bs_df,paste("Present: ", i))
+    genotypes_plot(bs_df,paste(">0.2 beta: ", i))
   }
 }
 for (i in bs) {
   bss_rows <- which(dat4$Body.site == i)
   if(length(bss_rows) > 0) {
     bs_df <- slice(top_score_mat,bss_rows)
-    genotypes_plot(bs_df,paste("Top score: ", i))
+    genotypes_plot(bs_df,paste(">0.5 beta: ", i))
   }
 }
 ```
 ###PCA
-```{r}
+```{r PCA}
 par(mfrow=c(2,2))
 pcobj <- prcomp(dat6)
 tr_gray <- rgb(0.5,.5,.5,.15)
@@ -105,7 +105,7 @@ for (i in multiSubjects$Subject.Id) {
 }
 ```
 ###Session Info
-```{r}
+```{r seesioninfo}
 sessionInfo()
 ```
 

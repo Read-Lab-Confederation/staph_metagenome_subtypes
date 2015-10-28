@@ -7,7 +7,7 @@ output: html_document
 
 Analysis of NYC subway data.  Based on a older script called 'NYsubwaySa.R'.
 
-```{r}
+```{r setup}
 print(date())
 library(RgoogleMaps)
 library(dplyr)
@@ -50,7 +50,7 @@ NYCdata_SRA <- left_join(NYCdata, strain_SRA, by = "Sample.ID")
 
 (Note used some similar commands in HMP_coverage.Rmd).  Need to merge becasue we originally separated CC30, CC8 and CC5 into multiple groups but this turned out not to be specific.
 
-```{r}
+```{r maps}
 Staph_betas <- read.csv("./Data/FInal_NYC_Staph_MecA_Table.csv", stringsAsFactors = FALSE, header = TRUE) %>% filter(Staph_Coverage > 0.025) %>% filter(!(Sample.Id == "SRR1750088")) 
 colnames(Staph_betas)[colnames(Staph_betas) == "CC_8_72"] <- "CC_72"
 Staph_betas <- merge_CCs(Staph_betas,"CC_8_")
@@ -76,7 +76,7 @@ coords_df_subtype_mat <- make_subtype_matrix(staph_df_coords)
 
 ### genotype plots
 
-```{r}
+```{r NYC_genotypes}
 
 presence_mat <- as.data.frame(bintr(staph_mat,0.2))
 top_score_mat <- as.data.frame(bintr(staph_mat,0.5))
@@ -109,7 +109,7 @@ gmap3 <- GetMap(center = c(lat = 40.7500, lon = -73.8667), size = c(640, 640), z
 ```
 ### Make plots of overall coverage
  
-```{r}
+```{r map_plots}
 png("./NYC_subway_plots/all_stations_z11.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")
 dev.off()
@@ -129,9 +129,9 @@ dev.off()
 
 ### PLot each CC type
 
-```{r}
+```{r subtype_map_plots}
 
-for (i in colnames(staph_df)[1:32]){
+for (i in colnames(staph_df)[1:33]){
     plot_CC_types(CC = i, mat = staph_df, map10 = gmap3, map11 = gmap2, plotdir = "./NYC_subway_plots/", SRA_file = staph_df_coords)
 
 }
@@ -159,7 +159,7 @@ for (i in colnames(staph_df)[1:32]){
 
 ### calculate hamming distances as an alternative using e1071 function
 
-```{r}
+```{r hamming_analysis}
 binmat <- bintr(coords_df_subtype_mat,0.2)
 #hammmingmat <- hamming.distance(binmat)
 bin_df <- as.data.frame(cbind(staph_df_coords$Run,binmat))

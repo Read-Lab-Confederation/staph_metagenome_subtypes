@@ -10,7 +10,7 @@ print(date())
 ```
 
 ```
-## [1] "Wed Oct 28 14:19:14 2015"
+## [1] "Wed Oct 28 16:17:19 2015"
 ```
 
 This workflow combines binstrain and coverage data from our Staph metagenome analysis and produces useful plots.  Also save data tables filtered at two different coverage levels for subsequent analysis in other workflows.
@@ -43,13 +43,25 @@ source('./staph_metagenome_tools.R')
 ###Download the coverage data from googlesheets
 
 
+```r
+covs <- gs_title("Coverage_Staph_MeCA") # note: might need to register app with google here .
+```
+
 ```
 ## Auto-refreshing stale OAuth token.
 ## Sheet successfully identifed: "Coverage_Staph_MeCA"
 ```
 
+```r
+print(covs$updated)
+```
+
 ```
 ## [1] "2015-08-05 17:41:50 GMT"
+```
+
+```r
+mapping <-gs_read(covs)
 ```
 
 ```
@@ -91,7 +103,7 @@ combined$Subject.Id <- as.factor(combined$Subject.Id)
 with(mapping, plot(Staph_cov,mecA_cov, log = "x", xlim=c(0.01,20), ylim=c(0,10), ylab = "mecA coverage", xlab = "log(Staph. coverage)", pch = 16))
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![plot of chunk unfiltered_cov](figure/unfiltered_cov-1.png) 
 
 
 ###Filter at two levels of Staph coverage and write files
@@ -124,13 +136,13 @@ cat("Number of samples above cov > 0.5 threshold = ",nrow(cov0.5))
 plot_coverages(cov0.025, "Cov. > 0.025 by body site")
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) 
+![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-1.png) 
 
 ```r
 plot_adjusted_coverages(cov0.025, "Adjusted covs by subtype: floor = 0.025")
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-2.png) 
+![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-2.png) 
 
 ```r
 plot_mecA(cov0.025,"Cov > 0.025 versus mecA , colored by body site")
@@ -150,7 +162,7 @@ plot_diversity_vers_cov(cov0.025,"Shannon diversity of calls versus coverage: cu
 ## This is vegan 2.3-0
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-3.png) 
+![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-3.png) 
 
 ```
 ## 
@@ -173,7 +185,7 @@ plot_diversity_vers_cov(cov0.025,"Shannon diversity of calls versus coverage: cu
 ## F-statistic: 0.7318 on 1 and 319 DF,  p-value: 0.3929
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-4.png) 
+![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-4.png) 
 
 ###Same plots for cov > 0.5 pl
 
@@ -181,19 +193,19 @@ plot_diversity_vers_cov(cov0.025,"Shannon diversity of calls versus coverage: cu
 plot_coverages(cov0.5, "Cov. > 0.5 by body site")
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png) 
+![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-1.png) 
 
 ```r
 plot_adjusted_coverages(cov0.5, "Adjusted covs by subtype: floor = 0.5")
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-2.png) 
+![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-2.png) 
 
 ```r
 plot_mecA(cov0.5,"Cov > 0.5 versus mecA , colored by body site")
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-3.png) 
+![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-3.png) 
 
 ```r
 plot_diversity_vers_cov(cov0.5,"Shannon diversity of calls versus coverage: cutoff cov > 0.5")
@@ -220,7 +232,7 @@ plot_diversity_vers_cov(cov0.5,"Shannon diversity of calls versus coverage: cuto
 ## F-statistic: 0.3125 on 1 and 147 DF,  p-value: 0.577
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-4.png) 
+![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-4.png) 
 
 ###Same plots for all data
 
@@ -228,19 +240,19 @@ plot_diversity_vers_cov(cov0.5,"Shannon diversity of calls versus coverage: cuto
 plot_coverages(combined, "coverage by body site")
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
+![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-1.png) 
 
 ```r
 plot_adjusted_coverages(combined, "Adjusted covs by subtype")
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-2.png) 
+![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-2.png) 
 
 ```r
 plot_mecA(combined,"Staph coverage versus mecA , colored by body site")
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-3.png) 
+![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-3.png) 
 
 ```r
 plot_diversity_vers_cov(combined,"Shannon diversity of calls versus coverage")
@@ -267,7 +279,7 @@ plot_diversity_vers_cov(combined,"Shannon diversity of calls versus coverage")
 ## F-statistic: 1.019 on 1 and 335 DF,  p-value: 0.3135
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-4.png) 
+![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-4.png) 
 
 ###Session info
 

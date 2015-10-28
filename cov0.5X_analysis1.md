@@ -13,7 +13,7 @@ print(date())
 ```
 
 ```
-## [1] "Wed Oct 28 14:19:24 2015"
+## [1] "Wed Oct 28 16:17:35 2015"
 ```
 
 ```r
@@ -488,7 +488,7 @@ run_bs_subj_adonis(dat8,dat4$Body.site,dat4$Subject.Id)
 subject_perm(dat4,multiSubjects,dat6)
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![plot of chunk perm_tests](figure/perm_tests-1.png) 
 
 ```
 ## Score for intraperson hits =  328 
@@ -555,49 +555,49 @@ top_score_mat <- as.data.frame(bintr(dat5,0.5))
 genotypes_plot(presence_mat,"All samples, subtypes present > 0.2")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png) 
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-1.png) 
 
 ```r
 genotypes_plot(top_score_mat,"All samples, subtypes present > 0.5")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-2.png) 
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-2.png) 
 
 ```r
 all_genotypes_plot(presence_mat,"All CCs, 0.5X cutoff, subtypes present > 0.2")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-3.png) 
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-3.png) 
 
 ```r
 all_genotypes_plot(top_score_mat,"All CCs, 0.5X cutoff, subtypes present > 0.5")
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-4.png) 
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-4.png) 
 
 ```r
 for (i in bs) {
   bss_rows <- which(dat4$Body.site == i)
   if(length(bss_rows) > 0) {
     bs_df <- slice(presence_mat,bss_rows)
-    genotypes_plot(bs_df,paste("Present: ", i))
+    genotypes_plot(bs_df,paste(">0.2 beta: ", i))
   }
 }
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-5.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-6.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-7.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-8.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-9.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-10.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-11.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-12.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-13.png) 
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-5.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-6.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-7.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-8.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-9.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-10.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-11.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-12.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-13.png) 
 
 ```r
 for (i in bs) {
   bss_rows <- which(dat4$Body.site == i)
   if(length(bss_rows) > 0) {
     bs_df <- slice(top_score_mat,bss_rows)
-    genotypes_plot(bs_df,paste("Top score: ", i))
+    genotypes_plot(bs_df,paste(">0.5 beta: ", i))
   }
 }
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-14.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-15.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-16.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-17.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-18.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-19.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-20.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-21.png) ![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-22.png) 
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-14.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-15.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-16.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-17.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-18.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-19.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-20.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-21.png) ![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-22.png) 
 ###PCA
 
 ```r
@@ -612,7 +612,7 @@ for (i in bs) {
 }
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png) ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-2.png) 
+![plot of chunk 0.5XPCA](figure/0.5XPCA-1.png) ![plot of chunk 0.5XPCA](figure/0.5XPCA-2.png) 
 
 ```r
 for (i in multiSubjects$Subject.Id) {
@@ -625,7 +625,7 @@ for (i in multiSubjects$Subject.Id) {
 }
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-3.png) ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-4.png) ![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-5.png) 
+![plot of chunk 0.5XPCA](figure/0.5XPCA-3.png) ![plot of chunk 0.5XPCA](figure/0.5XPCA-4.png) ![plot of chunk 0.5XPCA](figure/0.5XPCA-5.png) 
 ###Session Info
 
 ```r
@@ -654,6 +654,7 @@ sessionInfo()
 ##  [5] R6_2.1.1        stringr_1.0.0   plyr_1.8.3      tools_3.2.1    
 ##  [9] parallel_3.2.1  grid_3.2.1      nlme_3.1-122    mgcv_1.8-7     
 ## [13] DBI_0.3.1       class_7.3-14    gtools_3.5.0    lazyeval_0.1.10
-## [17] Matrix_1.2-2    evaluate_0.7.2  stringi_0.5-5   methods_3.2.1
+## [17] Matrix_1.2-2    formatR_1.2     evaluate_0.7.2  stringi_0.5-5  
+## [21] methods_3.2.1
 ```
 

@@ -7,7 +7,7 @@ output: html_document
 
 
 
-```{r}
+```{r make_tables}
 betas <- c("0.9","0.8","0.7","0.6")
 covs <- c("0.025X","0.05X","0.1X","0.5X", "0.75X")
 sens_mat <- matrix(nrow = 5, ncol = 4, c(0.839,0.87,0.887,0.857,0.843,0.862,0.89,0.918,0.932,0.924,0.868,0.896,0.923,0.959,0.958,0.874,0.9,0.928,0.972,0.973))
@@ -28,7 +28,7 @@ legend("topright", pch = 0:4, legend = c("0.9 SRA","0.8 SRA","0.7 SRA","0.6 SRA"
 
 
 ```{r, echo=FALSE}
-
+sessionInfo()
 ```
 
 

@@ -27,7 +27,7 @@ colnames(beta_plot) <- c("1","2","3")
 rownames <- c("CC_239","CC_151","CC_93", "Other")
 
 ```
-```{r simulation barplot}
+```{r simulation_barplot}
 par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
 colnames <- brewer.pal(4,"Set1")
 barplot(beta_plot,  ylab = "beta", col = colnames)

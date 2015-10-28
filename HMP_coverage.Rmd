@@ -20,14 +20,14 @@ source('./staph_metagenome_tools.R')
 
 ###Download the coverage data from googlesheets
 
-```{r, echo=FALSE}
+```{r get_iles}
 covs <- gs_title("Coverage_Staph_MeCA") # note: might need to register app with google here .
 print(covs$updated)
 mapping <-gs_read(covs)
 ```
 
 ###Import the binstrain data, merge, clean and harmonize colnames
-```{r}
+```{r harmonize}
 dat3 <- read.csv("./Data/Final_HMP_Matrix.csv", header = TRUE, stringsAsFactors = FALSE)
 colnames(dat3)[colnames(dat3) == "CC_8_72"] <- "CC_72"
 dat3 <- dat3[,-(2:5)] #drop redundant cols
@@ -55,14 +55,14 @@ combined$Subject.Id <- as.factor(combined$Subject.Id)
 ```
 #plot unflitered coverage
 
-```{r}
+```{r unfiltered_cov}
 with(mapping, plot(Staph_cov,mecA_cov, log = "x", xlim=c(0.01,20), ylim=c(0,10), ylab = "mecA coverage", xlab = "log(Staph. coverage)", pch = 16))
 
 ```
 
 
 ###Filter at two levels of Staph coverage and write files
-```{r}
+```{r filtered_cov_figs}
 cov0.025 <- filter(combined, Staph_cov > 0.025)
 cov0.5 <- filter(combined, Staph_cov > 0.5)
 write.table(cov0.025,"./Data/cov0.025")
@@ -74,7 +74,7 @@ cat("Number of samples above cov > 0.5 threshold = ",nrow(cov0.5))
 
 ###For cov > 0.025 plot the coverage at different body sites and other relationships
 
-```{r}
+```{r more_filtered_cov_plots_lowestcov}
 plot_coverages(cov0.025, "Cov. > 0.025 by body site")
 plot_adjusted_coverages(cov0.025, "Adjusted covs by subtype: floor = 0.025")
 plot_mecA(cov0.025,"Cov > 0.025 versus mecA , colored by body site")
@@ -82,7 +82,7 @@ plot_diversity_vers_cov(cov0.025,"Shannon diversity of calls versus coverage: cu
 ```
 
 ###Same plots for cov > 0.5 pl
-```{r}
+```{r more_filtered_cov_plots_medcov}
 plot_coverages(cov0.5, "Cov. > 0.5 by body site")
 plot_adjusted_coverages(cov0.5, "Adjusted covs by subtype: floor = 0.5")
 plot_mecA(cov0.5,"Cov > 0.5 versus mecA , colored by body site")
@@ -90,7 +90,7 @@ plot_diversity_vers_cov(cov0.5,"Shannon diversity of calls versus coverage: cuto
 ```
 
 ###Same plots for all data
-```{r}
+```{r more_unfiltered_cov_plots}
 plot_coverages(combined, "coverage by body site")
 plot_adjusted_coverages(combined, "Adjusted covs by subtype")
 plot_mecA(combined,"Staph coverage versus mecA , colored by body site")
@@ -98,6 +98,6 @@ plot_diversity_vers_cov(combined,"Shannon diversity of calls versus coverage")
 ```
 
 ###Session info
-```{r}
+```{r sessioninfo}
 sessionInfo()
 ```
