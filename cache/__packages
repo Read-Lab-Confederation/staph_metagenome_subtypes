@@ -1,0 +1,12 @@
+base
+knitr
+dplyr
+staphopiaRtools
+assertthat
+BiocGenerics
+S4Vectors
+IRanges
+XVector
+Biostrings
+ape
+phangorn

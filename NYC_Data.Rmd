@@ -26,7 +26,7 @@ source('./staph_metagenome_tools.R')
 
 ```{r, }
 #Public data from the original NYC subway publication: Afshinnekoo E, Meydan C, Chowdhury S, Jaroudi D, Boyer C, Bernstein N, Maritz JM, Reeves D, Gandara J, Chhangawala S, Ahsanuddin S, Simmons A, Nessel T, Sundaresh B, Pereira E, Jorgensen E, Kolokotronis S-O, Kirchberger N, Garcia I, Gandara D, Dhanraj S, Nawrin T, Saletore Y, Alexander N, Vijay P, Hénaff EM, Zumbo P, Walsh M, O’Mullan GD, Tighe S, Dudley JT, Dunaif A, Ennis S, O’Halloran E, Magalhaes TR, Boone B, Jones AL, Muth TR, Paolantonio KS, Alter E, Schadt EE, Garbarino J, Prill RJ, Carlton JM, Levy S, Mason CE. Geospatial Resolution of Human and Bacterial Diversity with City-Scale Metagenomics. Cell Systems [Internet]. Elsevier; 2015 Jul 29;1(1):72–87.
-NYCdata <- (read.csv("./Data/DataTable5-metaphlan-metadata_v19 .csv",stringsAsFactors = FALSE, header = TRUE))[1:4]
+NYCdata <- (read.csv("./Data/DataTable5-metaphlan-metadata_v19.csv",stringsAsFactors = FALSE, header = TRUE))[1:4]
 # we made this table from parsing the SRA
 strain_SRA <- read.table("./Data/runs-to-samples.txt", header = TRUE)
 colnames(strain_SRA) <- c("Run", "Sample.ID") #to make join easier
