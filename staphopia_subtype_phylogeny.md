@@ -208,11 +208,10 @@ sessionInfo()
 ## [11] knitr_1.11                
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] igraph_1.0.1     Rcpp_0.12.0      magrittr_1.5     nnls_1.4        
-##  [5] zlibbioc_1.14.0  lattice_0.20-33  R6_2.1.1         quadprog_1.5-5  
-##  [9] stringr_1.0.0    tools_3.2.1      grid_3.2.1       nlme_3.1-122    
-## [13] DBI_0.3.1        lazyeval_0.1.10  digest_0.6.8     RPostgreSQL_0.4 
-## [17] Matrix_1.2-2     formatR_1.2      codetools_0.2-14 evaluate_0.7.2  
-## [21] stringi_0.5-5
+##  [1] igraph_1.0.1    Rcpp_0.12.0     magrittr_1.5    nnls_1.4       
+##  [5] zlibbioc_1.14.0 lattice_0.20-33 R6_2.1.1        quadprog_1.5-5 
+##  [9] stringr_1.0.0   tools_3.2.1     grid_3.2.1      nlme_3.1-122   
+## [13] DBI_0.3.1       digest_0.6.8    RPostgreSQL_0.4 Matrix_1.2-2   
+## [17] formatR_1.2     evaluate_0.7.2  stringi_0.5-5
 ```
 

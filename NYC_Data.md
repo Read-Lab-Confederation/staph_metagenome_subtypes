@@ -13,7 +13,7 @@ print(date())
 ```
 
 ```
-## [1] "Wed Oct 28 16:51:36 2015"
+## [1] "Thu Oct 29 09:05:29 2015"
 ```
 
 ```r
@@ -87,19 +87,7 @@ source('./staph_metagenome_tools.R')
 
 ```r
 #Public data from the original NYC subway publication: Afshinnekoo E, Meydan C, Chowdhury S, Jaroudi D, Boyer C, Bernstein N, Maritz JM, Reeves D, Gandara J, Chhangawala S, Ahsanuddin S, Simmons A, Nessel T, Sundaresh B, Pereira E, Jorgensen E, Kolokotronis S-O, Kirchberger N, Garcia I, Gandara D, Dhanraj S, Nawrin T, Saletore Y, Alexander N, Vijay P, Hénaff EM, Zumbo P, Walsh M, O’Mullan GD, Tighe S, Dudley JT, Dunaif A, Ennis S, O’Halloran E, Magalhaes TR, Boone B, Jones AL, Muth TR, Paolantonio KS, Alter E, Schadt EE, Garbarino J, Prill RJ, Carlton JM, Levy S, Mason CE. Geospatial Resolution of Human and Bacterial Diversity with City-Scale Metagenomics. Cell Systems [Internet]. Elsevier; 2015 Jul 29;1(1):72–87.
-NYCdata <- (read.csv("./Data/DataTable5-metaphlan-metadata_v19 .csv",stringsAsFactors = FALSE, header = TRUE))[1:4]
-```
-
-```
-## Warning in file(file, "rt"): cannot open file './Data/DataTable5-metaphlan-
-## metadata_v19 .csv': No such file or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
-```
-
-```r
+NYCdata <- (read.csv("./Data/DataTable5-metaphlan-metadata_v19.csv",stringsAsFactors = FALSE, header = TRUE))[1:4]
 # we made this table from parsing the SRA
 strain_SRA <- read.table("./Data/runs-to-samples.txt", header = TRUE)
 colnames(strain_SRA) <- c("Run", "Sample.ID") #to make join easier
@@ -107,7 +95,8 @@ NYCdata_SRA <- left_join(NYCdata, strain_SRA, by = "Sample.ID")
 ```
 
 ```
-## Error in left_join(NYCdata, strain_SRA, by = "Sample.ID"): object 'NYCdata' not found
+## Warning in left_join_impl(x, y, by$x, by$y): joining factor and character
+## vector, coercing into character vector
 ```
 
 
@@ -147,15 +136,12 @@ staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run") #one of the sam
 ```
 
 ```
-## Error in inner_join(NYCdata_SRA, staph_df, by = "Run"): object 'NYCdata_SRA' not found
+## Warning in inner_join_impl(x, y, by$x, by$y): joining factors with
+## different levels, coercing to character vector
 ```
 
 ```r
 coords_df_subtype_mat <- make_subtype_matrix(staph_df_coords)
-```
-
-```
-## Error in select_(.data, .dots = lazyeval::lazy_dots(...)): object 'staph_df_coords' not found
 ```
 
 ### genotype plots
@@ -182,18 +168,12 @@ all_genotypes_plot(top_score_mat,"All NYC samples, subtypes present > 0.5")
 ```r
 locations_with_runs <- filter(NYCdata_SRA, !is.na(Run) ) %>%
   select(Latitude, Logitude)
-```
 
-```
-## Error in filter_(.data, .dots = lazyeval::lazy_dots(...)): object 'NYCdata_SRA' not found
-```
-
-```r
 lats <- as.numeric(as.character(locations_with_runs$Latitude))
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'locations_with_runs' not found
+## Warning: NAs introduced by coercion
 ```
 
 ```r
@@ -201,32 +181,19 @@ lons <- as.numeric(as.character(locations_with_runs$Logitude))
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'locations_with_runs' not found
+## Warning: NAs introduced by coercion
 ```
 
 ```r
 cols_staph <- rep(NULL,length(lats))
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'lats' not found
-```
-
-```r
 #all the statiitons which had S. aureus
 cols_staph[which(NYCdata_SRA$Run %in% Staph_betas$Run)] <- "red"
-```
 
-```
-## Error in cols_staph[which(NYCdata_SRA$Run %in% Staph_betas$Run)] <- "red": object 'cols_staph' not found
-```
-
-```r
 alllats <- as.numeric(as.character(NYCdata$Latitude)) #every non-numeric value is converted to NA
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'NYCdata' not found
+## Warning: NAs introduced by coercion
 ```
 
 ```r
@@ -234,7 +201,7 @@ alllons <- as.numeric(as.character(NYCdata$Logitude))
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'NYCdata' not found
+## Warning: NAs introduced by coercion
 ```
 ### Generate google maps
 
@@ -250,13 +217,6 @@ gmap3 <- GetMap(center = c(lat = 40.7500, lon = -73.8667), size = c(640, 640), z
 ```r
 png("./NYC_subway_plots/all_stations_z11.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")
-```
-
-```
-## Error in LatLon2XY(lat, lon, zoom): object 'lats' not found
-```
-
-```r
 dev.off()
 ```
 
@@ -268,13 +228,6 @@ dev.off()
 ```r
 png("./NYC_subway_plots/all_stations_z10.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap3, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")
-```
-
-```
-## Error in LatLon2XY(lat, lon, zoom): object 'lats' not found
-```
-
-```r
 dev.off()
 ```
 
@@ -286,13 +239,6 @@ dev.off()
 ```r
 png("./NYC_subway_plots/all_staph_z11.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = cols_staph)
-```
-
-```
-## Error in LatLon2XY(lat, lon, zoom): object 'lats' not found
-```
-
-```r
 dev.off()
 ```
 
@@ -304,13 +250,6 @@ dev.off()
 ```r
 png("./NYC_subway_plots/all_staph_z10.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap3, lat = lats , lon = lons, cex=1.5,pch=20, col = cols_staph)
-```
-
-```
-## Error in LatLon2XY(lat, lon, zoom): object 'lats' not found
-```
-
-```r
 dev.off()
 ```
 
@@ -327,10 +266,6 @@ for (i in colnames(staph_df)[1:33]){
     plot_CC_types(CC = i, mat = staph_df, map10 = gmap3, map11 = gmap2, plotdir = "./NYC_subway_plots/", SRA_file = staph_df_coords)
 
 }
-```
-
-```
-## Error in which(SRA_file[[CC]] > cutoff): object 'staph_df_coords' not found
 ```
 ### Mantel test for spatial autocorrelation of Staph aureus genotypes
 
@@ -357,134 +292,61 @@ for (i in colnames(staph_df)[1:33]){
 
 ```r
 binmat <- bintr(coords_df_subtype_mat,0.2)
-```
-
-```
-## Error in mat[which(mat > cutoff)] <- 1: object 'coords_df_subtype_mat' not found
-```
-
-```r
 #hammmingmat <- hamming.distance(binmat)
 bin_df <- as.data.frame(cbind(staph_df_coords$Run,binmat))
-```
-
-```
-## Error in cbind(staph_df_coords$Run, binmat): object 'staph_df_coords' not found
-```
-
-```r
 colnames(bin_df)[1] <- "Run"
-```
-
-```
-## Error in colnames(bin_df)[1] <- "Run": object 'bin_df' not found
-```
-
-```r
 # mantel.rtest(geogdist_staph,hammmingmat,nrepet = 9999)
 run_geog <- select(staph_df_coords,Run, Latitude, Logitude)
-```
-
-```
-## Error in select_(.data, .dots = lazyeval::lazy_dots(...)): object 'staph_df_coords' not found
-```
-
-```r
 combs <- combinations(r=2,v=run_geog$Run, n = length(run_geog$Run))
-```
-
-```
-## Error in mode(n): object 'run_geog' not found
-```
-
-```r
 geog_distance_vector <- sapply(1:nrow(combs), function(x) dist_between_stations(combs[x,],run_geog))
-```
-
-```
-## Error in nrow(combs): object 'combs' not found
-```
-
-```r
 hamm_distance_vector <- sapply(1:nrow(combs), function(x) H_distance_between_stations(combs[x,],bin_df))
-```
-
-```
-## Error in nrow(combs): object 'combs' not found
-```
-
-```r
 #some were taken from the same location - need to filter these out
 zero_stations <- which(geog_distance_vector == 0)
-```
-
-```
-## Error in which(geog_distance_vector == 0): object 'geog_distance_vector' not found
-```
-
-```r
 geog_distance_vector <- geog_distance_vector[-(zero_stations)]
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'geog_distance_vector' not found
-```
-
-```r
 hamm_distance_vector <- hamm_distance_vector[-(zero_stations)]
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'hamm_distance_vector' not found
-```
-
-```r
 hist(geog_distance_vector, breaks = 50)
 ```
 
-```
-## Error in hist(geog_distance_vector, breaks = 50): object 'geog_distance_vector' not found
-```
+![plot of chunk hamming_analysis](figure/hamming_analysis-1.png) 
 
 ```r
 hist(hamm_distance_vector)
 ```
 
-```
-## Error in hist(hamm_distance_vector): object 'hamm_distance_vector' not found
-```
+![plot of chunk hamming_analysis](figure/hamming_analysis-2.png) 
 
 ```r
 boxplot(geog_distance_vector ~ hamm_distance_vector, xlab = "Hamming distance", ylab = "km")
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'geog_distance_vector' not found
-```
-
-```r
 #try regression
 reg <- lm(geog_distance_vector ~ as.numeric(hamm_distance_vector))
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'geog_distance_vector' not found
-```
-
-```r
 segments(x0=1,x1=7,y0=reg$coefficients[1],y1=reg$coefficients[1]+(reg$coefficients[2]*6), col = "red")
 ```
 
-```
-## Error in segments(x0 = 1, x1 = 7, y0 = reg$coefficients[1], y1 = reg$coefficients[1] + : object 'reg' not found
-```
+![plot of chunk hamming_analysis](figure/hamming_analysis-3.png) 
 
 ```r
 summary(reg)
 ```
 
 ```
-## Error in summary(reg): object 'reg' not found
+## 
+## Call:
+## lm(formula = geog_distance_vector ~ as.numeric(hamm_distance_vector))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -13.437  -5.720  -1.127   4.509  38.864 
+## 
+## Coefficients:
+##                                  Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)                       10.6695     0.1981  53.849   <2e-16 ***
+## as.numeric(hamm_distance_vector)   0.6976     0.0711   9.811   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.637 on 10855 degrees of freedom
+## Multiple R-squared:  0.00879,	Adjusted R-squared:  0.008699 
+## F-statistic: 96.26 on 1 and 10855 DF,  p-value: < 2.2e-16
 ```
 
 #functions for looking at geog distance of individual subtypes by permutation
@@ -494,7 +356,8 @@ CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_8", cutoff = 0.2, s = 345
 ```
 
 ```
-## Error in which(SRA_file[[CC]] > cutoff): object 'staph_df_coords' not found
+## Av geog. distance of  CC_8  =  6.05981 
+## Quartile of random distribution of dists  0.024
 ```
 
 ```r
@@ -502,7 +365,8 @@ CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_30", cutoff = 0.2, s = 45
 ```
 
 ```
-## Error in which(SRA_file[[CC]] > cutoff): object 'staph_df_coords' not found
+## Av geog. distance of  CC_30  =  7.819078 
+## Quartile of random distribution of dists  0.268
 ```
 
 ```r
@@ -510,7 +374,8 @@ CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_5", cutoff = 0.2, s = 23,
 ```
 
 ```
-## Error in which(SRA_file[[CC]] > cutoff): object 'staph_df_coords' not found
+## Av geog. distance of  CC_5  =  10.42825 
+## Quartile of random distribution of dists  0.823
 ```
 
 ```r
@@ -518,7 +383,8 @@ CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_45", cutoff = 0.2, s = 45
 ```
 
 ```
-## Error in which(SRA_file[[CC]] > cutoff): object 'staph_df_coords' not found
+## Av geog. distance of  CC_45  =  8.472947 
+## Quartile of random distribution of dists  0.492
 ```
 
 ```r
@@ -526,7 +392,8 @@ CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_15", cutoff = 0.2, s = 98
 ```
 
 ```
-## Error in which(SRA_file[[CC]] > cutoff): object 'staph_df_coords' not found
+## Av geog. distance of  CC_15  =  7.433129 
+## Quartile of random distribution of dists  0.317
 ```
 
 ```r
@@ -534,7 +401,8 @@ CC_geog_perm_test(SRA_file = staph_df_coords, CC = "CC_1", cutoff = 0.2, s = 467
 ```
 
 ```
-## Error in which(SRA_file[[CC]] > cutoff): object 'staph_df_coords' not found
+## Av geog. distance of  CC_1  =  8.040803 
+## Quartile of random distribution of dists  0.424
 ```
 
 
