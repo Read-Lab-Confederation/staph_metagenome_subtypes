@@ -12,9 +12,9 @@ library(dplyr)
 source('./staph_metagenome_tools.R')
 ```
 
-You can also embed plots, for example:
 
-```{r, echo=FALSE}
+
+```{r, load strain info}
 strains <- read.csv("./Data/2114_strain_subtypes.csv", header = TRUE, stringsAsFactors = FALSE)
 CCs <- select(strains, Reference.CC) %>% unique() %>% arrange()
 ```
@@ -81,3 +81,10 @@ tps <- which(NJ$tip.label %in% tl$Sample.Id.of.0.75X)
 tiplabels(tip = tps, pch= 20, col = "red")
 ```
 
+Look at SNP#1752540, which is common in ST398
+```{r SNP#1752540}
+SNP <- read.table("./Data/SNP1752540_sample_tags.txt", header = FALSE, stringsAsFactors = FALSE)
+SNPtps <- which(NJ$tip.label %in% SNP$V1)
+plot(NJ, "unrooted", show.tip.label = FALSE, main = "SNP#1752540")
+tiplabels(tip = SNPtps, pch= 20, col = "red")
+```

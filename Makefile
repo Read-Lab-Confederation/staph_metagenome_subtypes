@@ -25,7 +25,7 @@ synthetic_data_plots.md: ./Data/Microbiome_simulation.txt synthetic_data_plots.R
 spec_sens_plot.md: spec_sens_plot.Rmd
 	Rscript -e "library(knitr); knit('spec_sens_plot.Rmd')"
 
-subtyping_tree_figure.md: ~/dm ./staph_metagenome_tools.R ./Data/2114_strain_subtypes.csv subtyping_tree_figure.Rmd
+subtyping_tree_figure.md: ~/dm ./staph_metagenome_tools.R ./Data/2114_strain_subtypes.csv subtyping_tree_figure.Rmd ./Data/SNP1752540_sample_tags.txt
 	Rscript -e "library(knitr); knit('subtyping_tree_figure.Rmd')"
 	
 ST398_specific_SNPs.tab ST398-specific-SNPs.md: ~/.staphopia_logon.R ST398-specific-SNPs.Rmd
