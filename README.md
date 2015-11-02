@@ -20,6 +20,10 @@ Analysis of S. aureus in the NYC subway metagenome
 
 [NYC_Data.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/NYC_Data.md)
 
+Plots of subtype location on NYC map
+
+[NYC_subway_plots](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/tree/master/NYC_subway_plots)
+
 Phylogenetic plots
 
 [subtyping_tree_figure.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/subtyping_tree_figure.md)
