@@ -13,7 +13,7 @@ print(date())
 ```
 
 ```
-## [1] "Sun Nov  1 16:39:29 2015"
+## [1] "Mon Nov  2 10:43:37 2015"
 ```
 
 ```r
@@ -108,9 +108,8 @@ source('./staph_metagenome_tools.R', echo=TRUE)
 ##  .... [TRUNCATED] 
 ## 
 ## > genotypes_plot <- function(mat, tit) {
-## +     top_genos <- c("CC_30", "CC_8", "CC_45", "CC_398", "CC_5", 
-## +         "CC_133", "CC_59")
-## +     cS <- co .... [TRUNCATED] 
+## +     top_genos <- c("CC_30", "CC_8", "CC_45", "CC_398", "CC_133", 
+## +         "CC_59", "CC_15", "CC_97", "CC_ ..." ... [TRUNCATED] 
 ## 
 ## > all_genotypes_plot <- function(mat, tit) {
 ## +     cS <- colSums(mat)

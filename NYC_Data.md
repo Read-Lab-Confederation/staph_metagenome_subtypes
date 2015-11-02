@@ -13,7 +13,7 @@ print(date())
 ```
 
 ```
-## [1] "Sun Nov  1 16:59:34 2015"
+## [1] "Mon Nov  2 11:04:00 2015"
 ```
 
 ```r
@@ -143,6 +143,24 @@ staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run") #one of the sam
 ```r
 coords_df_subtype_mat <- make_subtype_matrix(staph_df_coords)
 ```
+
+#Subtype abundance
+
+```r
+colSums(staph_mat > 0.2) %>% sort
+```
+
+```
+##   CC_93 CC_1021 CC_2361   CC_49  CC_130  CC_133  CC_291  CC_522  CC_121 
+##       0       0       0       1       1       1       1       1       2 
+##  CC_239   CC_59  CC_123  CC_425   CC_50   CC_97  CC_151  CC_779    CC_9 
+##       2       3       3       3       4       4       4       5       6 
+##   CC_22   CC_75   CC_78 CC_2198   CC_20  CC_398  CC_700   CC_80    CC_1 
+##       6       6       6       6       7       7       7       8       9 
+##   CC_15   CC_45   CC_72    CC_5    CC_8   CC_30 
+##      10      12      15      16      26      29
+```
+
 
 ### genotype plots
 

@@ -74,6 +74,13 @@ staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run") #one of the sam
 coords_df_subtype_mat <- make_subtype_matrix(staph_df_coords)
 ```
 
+#Subtype abundance
+```{r subtype_abundance}
+
+colSums(staph_mat > 0.2) %>% sort
+```
+
+
 ### genotype plots
 
 ```{r NYC_genotypes}
