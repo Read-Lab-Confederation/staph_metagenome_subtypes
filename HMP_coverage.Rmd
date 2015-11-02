@@ -70,6 +70,7 @@ write.table(cov0.5,"./Data/cov0.5")
 write.table(combined,"./Data/combined")
 cat("Number of samples above cov > 0.025 threshold = ",nrow(cov0.025))
 cat("Number of samples above cov > 0.5 threshold = ",nrow(cov0.5))
+
 ```
 
 ###For cov > 0.025 plot the coverage at different body sites and other relationships

@@ -36,9 +36,13 @@ library(dplyr)
 source('./staph_metagenome_tools.R')
 ```
 
-You can also embed plots, for example:
 
 
+
+```r
+strains <- read.csv("./Data/2114_strain_subtypes.csv", header = TRUE, stringsAsFactors = FALSE)
+CCs <- select(strains, Reference.CC) %>% unique() %>% arrange()
+```
 
 Load tree
 
@@ -147,3 +151,13 @@ tiplabels(tip = tps, pch= 20, col = "red")
 
 ![plot of chunk sensitivity_tree](figure/sensitivity_tree-1.png) 
 
+Look at SNP#1752540, which is common in ST398
+
+```r
+SNP <- read.table("./Data/SNP1752540_sample_tags.txt", header = FALSE, stringsAsFactors = FALSE)
+SNPtps <- which(NJ$tip.label %in% SNP$V1)
+plot(NJ, "unrooted", show.tip.label = FALSE, main = "SNP#1752540")
+tiplabels(tip = SNPtps, pch= 20, col = "red")
+```
+
+![plot of chunk SNP#1752540](figure/SNP#1752540-1.png) 

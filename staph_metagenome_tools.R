@@ -46,7 +46,7 @@ create_cooccur_mat <- function(mat){
 }
 
 genotypes_plot <- function(mat,tit) {
-  top_genos <- c("CC_30","CC_8","CC_45","CC_398","CC_133","CC_59","CC_15","CC_97","CC_5","CC_9", "CC_22", "CC_239", "CC_1", "CC_121")
+  top_genos <- c("CC_30","CC_8","CC_45","CC_398","CC_5","CC_133","CC_59")
   cS <- colSums(mat)
   cStop <- cS[top_genos]
   cStop[["others"]] <- sum(cS) - sum(cStop)  

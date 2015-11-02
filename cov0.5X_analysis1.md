@@ -13,7 +13,7 @@ print(date())
 ```
 
 ```
-## [1] "Wed Oct 28 16:17:35 2015"
+## [1] "Sun Nov  1 16:39:29 2015"
 ```
 
 ```r
@@ -108,8 +108,9 @@ source('./staph_metagenome_tools.R', echo=TRUE)
 ##  .... [TRUNCATED] 
 ## 
 ## > genotypes_plot <- function(mat, tit) {
-## +     top_genos <- c("CC_30", "CC_8", "CC_45", "CC_398", "CC_133", 
-## +         "CC_59", "CC_15", "CC_97", "CC_ ..." ... [TRUNCATED] 
+## +     top_genos <- c("CC_30", "CC_8", "CC_45", "CC_398", "CC_5", 
+## +         "CC_133", "CC_59")
+## +     cS <- co .... [TRUNCATED] 
 ## 
 ## > all_genotypes_plot <- function(mat, tit) {
 ## +     cS <- colSums(mat)
@@ -233,6 +234,25 @@ dat4$Subject.Id <- as.factor(dat4$Subject.Id)
 dat6 <- make_subtype_matrix(dat4) %>% bintr(0.2) %>% hamming.distance %>% data.frame 
 dat8 <- make_subtype_matrix(dat4) %>% hamming.distance %>% data.frame 
 ```
+
+#Subtype abundance
+
+```r
+colSums(dat5 > 0.2) %>% sort
+```
+
+```
+##   CC_49   CC_50   CC_78  CC_123  CC_130 CC_1021    CC_1   CC_22   CC_75 
+##       0       0       0       0       0       0       1       1       1 
+##  CC_239  CC_425  CC_522 CC_2198 CC_2361   CC_80  CC_121  CC_291    CC_9 
+##       1       1       1       1       1       2       2       2       3 
+##   CC_20  CC_151  CC_700  CC_779   CC_97   CC_93   CC_15   CC_72   CC_59 
+##       3       3       3       3       6       7       8       8      10 
+##    CC_5  CC_133   CC_45  CC_398    CC_8   CC_30 
+##      12      14      19      23      27      63
+```
+
+
 ### PERMANOVA
 
 test for significant associations of subtype with with bodysite and subject.  us e Hamming dist. matrix. Two levels, one with a beta cutoff for all samples > 0.2 and one without

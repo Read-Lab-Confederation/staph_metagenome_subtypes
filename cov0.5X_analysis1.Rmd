@@ -38,6 +38,14 @@ dat4$Subject.Id <- as.factor(dat4$Subject.Id)
 dat6 <- make_subtype_matrix(dat4) %>% bintr(0.2) %>% hamming.distance %>% data.frame 
 dat8 <- make_subtype_matrix(dat4) %>% hamming.distance %>% data.frame 
 ```
+
+#Subtype abundance
+```{r subtype_abundance}
+
+colSums(dat5 > 0.2) %>% sort
+```
+
+
 ### PERMANOVA
 
 test for significant associations of subtype with with bodysite and subject.  us e Hamming dist. matrix. Two levels, one with a beta cutoff for all samples > 0.2 and one without

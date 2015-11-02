@@ -86,6 +86,23 @@ dat5 <- make_subtype_matrix(dat4)
 dat6 <- make_subtype_matrix(dat4) %>% bintr(0.2) %>% hamming.distance %>% data.frame 
 dat8 <- make_subtype_matrix(dat4) %>% hamming.distance %>% data.frame 
 ```
+#Subtype abundance
+
+```r
+colSums(dat5 > 0.2) %>% sort
+```
+
+```
+##   CC_49  CC_123   CC_78  CC_239  CC_522 CC_1021   CC_22  CC_130  CC_425 
+##       0       0       1       1       1       1       2       2       2 
+## CC_2361   CC_50   CC_80  CC_151 CC_2198   CC_20  CC_291  CC_779    CC_1 
+##       2       3       3       4       4       5       5       5       6 
+##    CC_9  CC_700   CC_75  CC_121   CC_93   CC_72   CC_15   CC_97   CC_59 
+##       7       7       8      11      12      13      15      15      19 
+##  CC_133    CC_5  CC_398   CC_45    CC_8   CC_30 
+##      22      26      29      32      85     113
+```
+
 ### Permanova
 
 test for significant associations of subtype with with bodysite and subject.  us e Hamming dist. matrix. Two levels, one with a beta cutoff for all samples > 0.2 and one without
