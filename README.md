@@ -1,4 +1,4 @@
-#The single-species metagenome: subtyping *Staphylococcus aureus* core genome sequences from shotgun metagenomic data  metagenome subtypes
+#The single-species metagenome: subtyping *Staphylococcus aureus* core genome sequences from shotgun metagenomic data  
 
 by
 Sandeep J, Joseph, Ben Li, Robert A. Petit III,  Zhaohui S. Qin,  Lyndsey A. Darrow and Timothy D. Read
