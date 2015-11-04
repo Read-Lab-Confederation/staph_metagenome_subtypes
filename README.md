@@ -13,7 +13,7 @@ Filtering the raw reads that mapped to S. aureus for each HMP by coverage.
 
 [HMP_coverage.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/HMP_coverage.md)
 
-Analysis of HMP strains for subject and body site diversity at different coverage levels.
+Analysis of HMP strains for subject and body site diversity at different *S. aureus* core genome coverage levels.
 
 [cov0.025X_analysis1.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/cov0.025X_analysis1.md)
 
