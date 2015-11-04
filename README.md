@@ -1,8 +1,13 @@
-#*Staph. aureus*  metagenome subtypes
+#The single-species metagenome: subtyping *Staphylococcus aureus* core genome sequences from shotgun metagenomic data  metagenome subtypes
 
-This repo contains code, data, knitr html documents used for whole metagenome subtyping analysis of *S. aureus*.
+by
+Sandeep J, Joseph, Ben Li, Robert A. Petit III,  Zhaohui S. Qin,  Lyndsey A. Darrow and Timothy D. Read
 
-##Markdown results files
+Emory University, Atlanta, Georgia
+
+This repo contains code, data, and knitr-produced markdown files 
+
+##Data
 
 Filtering the raw reads that mapped to S. aureus for each HMP by coverage.  
 
