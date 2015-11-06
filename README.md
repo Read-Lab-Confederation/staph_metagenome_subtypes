@@ -11,6 +11,10 @@ This repo contains code, data, and knitr-produced markdown files
 
 ##Files
 
+Scripts for binstrain analysis
+
+[binstrain](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/tree/master/Binstrain)
+
 Filtering the raw reads that mapped to S. aureus for each HMP by coverage.  
 
 [HMP_coverage.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/HMP_coverage.md)
