@@ -5,9 +5,11 @@ Sandeep J, Joseph, Ben Li, Robert A. Petit III,  Zhaohui S. Qin,  Lyndsey A. Dar
 
 Emory University, Atlanta, Georgia
 
+[Prepint in BioArxiv](http://biorxiv.org/content/early/2015/11/05/030692)
+
 This repo contains code, data, and knitr-produced markdown files 
 
-##Data
+##Files
 
 Filtering the raw reads that mapped to S. aureus for each HMP by coverage.  
 
