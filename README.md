@@ -45,3 +45,10 @@ Misc. plots used in paper
 
 [synthetic_data_plots.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/synthetic_data_plots.md)
 
+Rerun using 40 original CC types
+
+[HMP_coverage40.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/HMP_coverage40.md)
+
+[cov0.025X_analysis_40.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/cov0.025X_analysis_40.md)
+
+[cov0.5X_analysis_40.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/cov0.5X_analysis_40.md)
