@@ -1,6 +1,11 @@
 #best to use 'make core'
 
 #makefile does not convert reports to html at the moment
+
+all: core 40CC
+#40CC
+40CC: HMP_coverage40.md cov0.5X_analysis_40.md cov0.025X_analysis_40.md
+
 #core analysis
 core: HMP_coverage.md cov0.5X_analysis1.md cov0.025X_analysis1.md unfiltered_analysis1.md NYC_Data.md synthetic_data_plots.md spec_sens_plot.md subtyping_tree_figure.md
 
@@ -33,6 +38,16 @@ ST398_specific_SNPs.tab ST398-specific-SNPs.md: ~/.staphopia_logon.R ST398-speci
 	
 screen-ST398_tongue_dorsum.md: SNPs-in-mpileup.R ./Data/combined ./Data/ST398_specific_SNPs.tab ~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_PROJECT_SHARED/Mpileup_tongue_dorsum/ screen-ST398_tongue_dorsum.Rmd
 	Rscript -e "library(knitr); knit('screen-ST398_tongue_dorsum.Rmd')"
+	
+HMP_coverage40.md: ./Data/Final_HMP_Matrix.csv ./staph_metagenome_tools.R HMP_coverage40.Rmd
+	Rscript -e "library(knitr); knit('./HMP_coverage40.Rmd')"
+
+cov0.5X_analysis_40.md: ./staph_metagenome_tools.R ./Data/cov40_0.5 cov0.5X_analysis_40.Rmd
+	Rscript -e "library(knitr); knit('./cov0.5X_analysis_40.Rmd')"
+	
+cov0.025X_analysis_40.md: ./staph_metagenome_tools.R ./Data/cov40_0.025 cov0.025X_analysis_40.Rmd
+	Rscript -e "library(knitr); knit('./cov0.025X_analysis_40.Rmd')"
+
 	
 #warning: this script takes a day to run and creates a large cache
 staphopia_subtype_phylogeny.md ~/dm: ./Data/strains_used_for_subtype_tests.csv staphopia_subtype_phylogeny.Rmd
