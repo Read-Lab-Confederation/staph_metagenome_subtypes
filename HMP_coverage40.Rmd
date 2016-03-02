@@ -7,12 +7,9 @@ output: html_document
 
 The original "combined", "cov0.025" and "cov0.5", were made with a step that merged all the CC5, CC8 and CC30 subgroups together.  Prompted by a reviewer's comment, this script remakes the files, which are used in downstream processing.
 
-
 ```{r install_googlesheets}
 devtools::install_github("jennybc/googlesheets")
 ```
-
-
 
 ```{r libraries}
 library(devtools)

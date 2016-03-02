@@ -45,8 +45,10 @@ create_cooccur_mat <- function(mat){
   return(u)
 }
 
-genotypes_plot <- function(mat,tit) {
-  top_genos <- c("CC_30","CC_8","CC_45","CC_398","CC_133","CC_59","CC_15","CC_97","CC_5","CC_9", "CC_22", "CC_239", "CC_1", "CC_121")
+genotypes_plot <- function(mat,tit,top_genos) {
+  if (length(top_genos) == 0) {
+    top_genos <- c("CC_30","CC_8","CC_45","CC_398","CC_133","CC_59","CC_15","CC_97","CC_5","CC_9", "CC_22", "CC_239", "CC_1", "CC_121")
+  }
   cS <- colSums(mat)
   cStop <- cS[top_genos]
   cStop[["others"]] <- sum(cS) - sum(cStop)  
@@ -88,7 +90,7 @@ run_bs_subj_adonis <-function(df,bs_vec,subj_vec) {
 make_subtype_matrix <-function(df) {
   library(dplyr)
   mat <- select(df,matches("CC")) %>% as.matrix
-  assert_that(dim(mat)[2] == 33)
+  #assert_that(dim(mat)[2] == 33)
   return(mat)
 }
 
@@ -135,7 +137,7 @@ check_staph_df <- function(df){
   library(assertthat)
   assert_that(length(grep("Body.site",colnames(df))) == 1)
   assert_that(length(grep("Subject.Id",colnames(df))) == 1)
-  assert_that(length(grep("CC",colnames(df))) == 33)
+  assert_that(length(grep("CC",colnames(df))) > 32)
 }
 
 subject_perm <- function(df,multiSubjects,hamming_mat){

@@ -1,0 +1,120 @@
+---
+title: "Distribution analysis of 0.025X filtered data"
+author: "Tim Read"
+date: "August 13, 2015"
+output: html_document
+---
+Starting form the filtered table from 'HMP_coverage40.Rmd'.  Run a series of analysis to look at relationships between body site and subjects.
+
+
+```{r setup}
+print(date())
+library(reshape2)
+#library(igraph)
+library(dplyr)
+#library(biomod2)
+library(e1071)
+library(RColorBrewer)
+library(gdata)
+library(vegan)
+library(assertthat)
+source('./staph_metagenome_tools.R', echo=TRUE)
+```
+
+###Read in data file created in earlier pipeline
+
+```{r rees_covtable}
+dat4 <- read.table("./Data/cov40_0.5")
+
+```
+
+###Create data files
+```{r}
+#list of all subjects with more than one sample
+multiSubjects <- count(dat4,Subject.Id) %>% filter(n > 1) %>% select(Subject.Id ) 
+dat5 <- make_subtype_matrix(dat4)
+print(dim(dat5))
+#create Hamming dist matrices with and without cutof  min value of 0.2
+dat4$Subject.Id <- as.factor(dat4$Subject.Id)
+dat6 <- make_subtype_matrix(dat4) %>% bintr(0.2) %>% hamming.distance %>% data.frame 
+dat8 <- make_subtype_matrix(dat4) %>% hamming.distance %>% data.frame 
+```
+#Subtype abundance
+```{r subtype_abundance}
+
+colSums(dat5 > 0.2) %>% sort
+```
+
+
+### PERMANOVA
+
+test for significant associations of subtype with with bodysite and subject.  us e Hamming dist. matrix. Two levels, one with a beta cutoff for all samples > 0.2 and one without
+```{r permanova}
+set.seed(344098)
+run_bs_subj_adonis(dat6,dat4$Body.site,dat4$Subject.Id)
+run_bs_subj_adonis(dat8,dat4$Body.site,dat4$Subject.Id)
+```
+### Permutation tests
+```{r perm tests}
+#test ffor whether intra-subject distance greater than intersubject
+subject_perm(dat4,multiSubjects,dat6)
+
+#now look at the same test between body sites
+bs <- levels(dat4$Body.site)
+by_factor_perm(bs,dat4,dat6)
+```
+###Plots of subtype distribution
+```{r genotype_plots}
+presence_mat <- as.data.frame(bintr(dat5,0.2))
+top_score_mat <- as.data.frame(bintr(dat5,0.5))
+topCCs <- names(sort(colSums(presence_mat), decreasing = TRUE)[1:14])
+# png("~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_barchart.png",width=640, height =640, res = 75)
+# dev.off()
+genotypes_plot(presence_mat,"Top CCs, 0.025X cutff, subtypes present > 0.2",topCCs)
+genotypes_plot(top_score_mat,"Top CCs, 0.025X cutoff, subtypes present > 0.5",topCCs)
+
+all_genotypes_plot(presence_mat,"All CCs, 0.025X cutoff, subtypes present > 0.2")
+all_genotypes_plot(top_score_mat,"All CCs, 0.025X cutoff, subtypes present > 0.5")
+
+
+for (i in bs) {
+  bss_rows <- which(dat4$Body.site == i)
+  if(length(bss_rows) > 0) {
+    bs_df <- slice(presence_mat,bss_rows)
+    genotypes_plot(bs_df,paste(">0.2 beta: ", i),topCCs)
+  }
+}
+for (i in bs) {
+  bss_rows <- which(dat4$Body.site == i)
+  if(length(bss_rows) > 0) {
+    bs_df <- slice(top_score_mat,bss_rows)
+    genotypes_plot(bs_df,paste(">0.5 beta: ", i),topCCs)
+  }
+}
+```
+###PCA
+```{r PCA}
+par(mfrow=c(2,2))
+pcobj <- prcomp(dat6)
+tr_gray <- rgb(0.5,.5,.5,.15)
+
+for (i in bs) {
+  prcols <- rep(tr_gray,nrow(dat6))
+  prcols[which(dat4$Body.site == i)] <- "red"
+  plot(pcobj$x,col = prcols, pch = 16, main = i)
+}
+
+for (i in multiSubjects$Subject.Id) {
+  sub_rows = which(dat4$Subject.Id == as.character(i))
+  if (length(sub_rows) > 3){
+    prcols <- rep(tr_gray,nrow(dat6))
+    prcols[sub_rows] <- "blue"
+    plot(pcobj$x,col = prcols, pch = 16, main = c("Subject",i))
+  }
+}
+```
+###Session Info
+```{r seesioninfo}
+sessionInfo()
+```
+
