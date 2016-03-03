@@ -10,7 +10,7 @@ print(date())
 ```
 
 ```
-## [1] "Mon Nov  2 10:43:27 2015"
+## [1] "Wed Mar  2 17:50:58 2016"
 ```
 
 This workflow combines binstrain and coverage data from our Staph metagenome analysis and produces useful plots.  Also save data tables filtered at two different coverage levels for subsequent analysis in other workflows.
@@ -24,11 +24,15 @@ library("dplyr")
 ```
 ## 
 ## Attaching package: 'dplyr'
-## 
+```
+
+```
 ## The following objects are masked from 'package:stats':
 ## 
 ##     filter, lag
-## 
+```
+
+```
 ## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union
@@ -48,8 +52,7 @@ covs <- gs_title("Coverage_Staph_MeCA") # note: might need to register app with 
 ```
 
 ```
-## Auto-refreshing stale OAuth token.
-## Sheet successfully identifed: "Coverage_Staph_MeCA"
+## Sheet successfully identified: "Coverage_Staph_MeCA"
 ```
 
 ```r
@@ -65,7 +68,11 @@ mapping <-gs_read(covs)
 ```
 
 ```
-## Accessing worksheet titled "anterior_nares_MecA_Staph_Posit"
+## Accessing worksheet titled 'anterior_nares_MecA_Staph_Posit'.
+```
+
+```
+## No encoding supplied: defaulting to UTF-8.
 ```
 
 ###Import the binstrain data, merge, clean and harmonize colnames
@@ -103,7 +110,7 @@ combined$Subject.Id <- as.factor(combined$Subject.Id)
 with(mapping, plot(Staph_cov,mecA_cov, log = "x", xlim=c(0.01,20), ylim=c(0,10), ylab = "mecA coverage", xlab = "log(Staph. coverage)", pch = 16))
 ```
 
-![plot of chunk unfiltered_cov](figure/unfiltered_cov-1.png) 
+![plot of chunk unfiltered_cov](figure/unfiltered_cov-1.png)
 
 
 ###Filter at two levels of Staph coverage and write files
@@ -136,13 +143,13 @@ cat("Number of samples above cov > 0.5 threshold = ",nrow(cov0.5))
 plot_coverages(cov0.025, "Cov. > 0.025 by body site")
 ```
 
-![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-1.png) 
+![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-1.png)
 
 ```r
 plot_adjusted_coverages(cov0.025, "Adjusted covs by subtype: floor = 0.025")
 ```
 
-![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-2.png) 
+![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-2.png)
 
 ```r
 plot_mecA(cov0.025,"Cov > 0.025 versus mecA , colored by body site")
@@ -151,18 +158,28 @@ plot_diversity_vers_cov(cov0.025,"Shannon diversity of calls versus coverage: cu
 
 ```
 ## Loading required package: permute
+```
+
+```
 ## 
 ## Attaching package: 'permute'
-## 
+```
+
+```
 ## The following object is masked from 'package:gtools':
 ## 
 ##     permute
-## 
-## Loading required package: lattice
-## This is vegan 2.3-0
 ```
 
-![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-3.png) 
+```
+## Loading required package: lattice
+```
+
+```
+## This is vegan 2.3-4
+```
+
+![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-3.png)
 
 ```
 ## 
@@ -185,7 +202,7 @@ plot_diversity_vers_cov(cov0.025,"Shannon diversity of calls versus coverage: cu
 ## F-statistic: 0.7318 on 1 and 319 DF,  p-value: 0.3929
 ```
 
-![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-4.png) 
+![plot of chunk more_filtered_cov_plots_lowestcov](figure/more_filtered_cov_plots_lowestcov-4.png)
 
 ###Same plots for cov > 0.5 pl
 
@@ -193,19 +210,19 @@ plot_diversity_vers_cov(cov0.025,"Shannon diversity of calls versus coverage: cu
 plot_coverages(cov0.5, "Cov. > 0.5 by body site")
 ```
 
-![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-1.png) 
+![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-1.png)
 
 ```r
 plot_adjusted_coverages(cov0.5, "Adjusted covs by subtype: floor = 0.5")
 ```
 
-![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-2.png) 
+![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-2.png)
 
 ```r
 plot_mecA(cov0.5,"Cov > 0.5 versus mecA , colored by body site")
 ```
 
-![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-3.png) 
+![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-3.png)
 
 ```r
 plot_diversity_vers_cov(cov0.5,"Shannon diversity of calls versus coverage: cutoff cov > 0.5")
@@ -232,7 +249,7 @@ plot_diversity_vers_cov(cov0.5,"Shannon diversity of calls versus coverage: cuto
 ## F-statistic: 0.3125 on 1 and 147 DF,  p-value: 0.577
 ```
 
-![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-4.png) 
+![plot of chunk more_filtered_cov_plots_medcov](figure/more_filtered_cov_plots_medcov-4.png)
 
 ###Same plots for all data
 
@@ -240,19 +257,19 @@ plot_diversity_vers_cov(cov0.5,"Shannon diversity of calls versus coverage: cuto
 plot_coverages(combined, "coverage by body site")
 ```
 
-![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-1.png) 
+![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-1.png)
 
 ```r
 plot_adjusted_coverages(combined, "Adjusted covs by subtype")
 ```
 
-![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-2.png) 
+![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-2.png)
 
 ```r
 plot_mecA(combined,"Staph coverage versus mecA , colored by body site")
 ```
 
-![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-3.png) 
+![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-3.png)
 
 ```r
 plot_diversity_vers_cov(combined,"Shannon diversity of calls versus coverage")
@@ -265,21 +282,21 @@ plot_diversity_vers_cov(combined,"Shannon diversity of calls versus coverage")
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-## -1.311 -0.641 -0.442 -0.100 70.136 
+## -1.315 -0.638 -0.440 -0.096 70.140 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(>|t|)  
-## (Intercept)   0.6692     0.3149   2.125   0.0343 *
-## Shannon       0.3829     0.3793   1.009   0.3135  
+## (Intercept)   0.6651     0.3134   2.122   0.0346 *
+## Shannon       0.3865     0.3782   1.022   0.3075  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 3.956 on 335 degrees of freedom
-## Multiple R-squared:  0.003032,	Adjusted R-squared:  5.595e-05 
-## F-statistic: 1.019 on 1 and 335 DF,  p-value: 0.3135
+## Residual standard error: 3.95 on 336 degrees of freedom
+## Multiple R-squared:  0.003099,	Adjusted R-squared:  0.0001321 
+## F-statistic: 1.045 on 1 and 336 DF,  p-value: 0.3075
 ```
 
-![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-4.png) 
+![plot of chunk more_unfiltered_cov_plots](figure/more_unfiltered_cov_plots-4.png)
 
 ###Session info
 
@@ -288,9 +305,9 @@ sessionInfo()
 ```
 
 ```
-## R version 3.2.1 (2015-06-18)
+## R version 3.2.3 (2015-12-10)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.10.5 (Yosemite)
+## Running under: OS X 10.11.3 (El Capitan)
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -299,15 +316,16 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-## [1] vegan_2.3-0        lattice_0.20-33    permute_0.8-4     
-## [4] gtools_3.5.0       assertthat_0.1     dplyr_0.4.2       
-## [7] googlesheets_0.1.0 knitr_1.11        
+## [1] vegan_2.3-4             lattice_0.20-33         permute_0.9-0          
+## [4] gtools_3.5.0            assertthat_0.1          dplyr_0.4.3            
+## [7] googlesheets_0.1.0.9001 knitr_1.12.3           
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.0      cluster_2.0.3    xml2_0.1.1       magrittr_1.5    
-##  [5] MASS_7.3-44      R6_2.1.1         stringr_1.0.0    httr_1.0.0      
-##  [9] tools_3.2.1      parallel_3.2.1   grid_3.2.1       nlme_3.1-122    
-## [13] mgcv_1.8-7       DBI_0.3.1        lazyeval_0.1.10  digest_0.6.8    
-## [17] Matrix_1.2-2     formatR_1.2      curl_0.9.3       evaluate_0.7.2  
-## [21] stringi_0.5-5    cellranger_1.0.0 methods_3.2.1    jsonlite_0.9.16
+##  [1] Rcpp_0.12.3      cluster_2.0.3    xml2_0.1.2       magrittr_1.5    
+##  [5] MASS_7.3-45      R6_2.1.2         stringr_1.0.0    httr_1.1.0      
+##  [9] tools_3.2.3      parallel_3.2.3   grid_3.2.3       nlme_3.1-125    
+## [13] mgcv_1.8-11      DBI_0.3.1        openssl_0.9.2    lazyeval_0.1.10 
+## [17] Matrix_1.2-3     purrr_0.2.1      readr_0.2.2      formatR_1.2.1   
+## [21] curl_0.9.6       evaluate_0.8     stringi_1.0-1    cellranger_1.0.0
+## [25] methods_3.2.3    jsonlite_0.9.19
 ```

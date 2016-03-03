@@ -13,7 +13,7 @@ print(date())
 ```
 
 ```
-## [1] "Mon Nov  2 10:46:02 2015"
+## [1] "Wed Mar  2 17:58:26 2016"
 ```
 
 ```r
@@ -25,11 +25,15 @@ library(dplyr)
 ```
 ## 
 ## Attaching package: 'dplyr'
-## 
+```
+
+```
 ## The following objects are masked from 'package:stats':
 ## 
 ##     filter, lag
-## 
+```
+
+```
 ## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union
@@ -44,19 +48,34 @@ library(gdata)
 
 ```
 ## gdata: read.xls support for 'XLS' (Excel 97-2004) files ENABLED.
+```
+
+```
 ## 
+```
+
+```
 ## gdata: read.xls support for 'XLSX' (Excel 2007+) files ENABLED.
+```
+
+```
 ## 
 ## Attaching package: 'gdata'
-## 
+```
+
+```
 ## The following objects are masked from 'package:dplyr':
 ## 
 ##     combine, first, last
-## 
+```
+
+```
 ## The following object is masked from 'package:stats':
 ## 
 ##     nobs
-## 
+```
+
+```
 ## The following object is masked from 'package:utils':
 ## 
 ##     object.size
@@ -68,8 +87,14 @@ library(vegan)
 
 ```
 ## Loading required package: permute
+```
+
+```
 ## Loading required package: lattice
-## This is vegan 2.3-0
+```
+
+```
+## This is vegan 2.3-4
 ```
 
 ```r
@@ -107,9 +132,9 @@ source('./staph_metagenome_tools.R', echo=TRUE)
 ## +     x <- as.matrix(w[, -1])
 ##  .... [TRUNCATED] 
 ## 
-## > genotypes_plot <- function(mat, tit) {
-## +     top_genos <- c("CC_30", "CC_8", "CC_45", "CC_398", "CC_133", 
-## +         "CC_59", "CC_15", "CC_97", "CC_ ..." ... [TRUNCATED] 
+## > genotypes_plot <- function(mat, tit, top_genos) {
+## +     if (length(top_genos) == 0) {
+## +         top_genos <- c("CC_30", "CC_8", "CC_45", "CC_398", " ..." ... [TRUNCATED] 
 ## 
 ## > all_genotypes_plot <- function(mat, tit) {
 ## +     cS <- colSums(mat)
@@ -125,7 +150,8 @@ source('./staph_metagenome_tools.R', echo=TRUE)
 ## > make_subtype_matrix <- function(df) {
 ## +     library(dplyr)
 ## +     mat <- select(df, matches("CC")) %>% as.matrix
-## +     assert_that(dim(mat)[2] == 33) .... [TRUNCATED] 
+## +     return(mat)
+## + }
 ## 
 ## > plot_coverages <- function(combined.df, titl) {
 ## +     check_staph_df(combined.df)
@@ -270,10 +296,10 @@ run_bs_subj_adonis(dat6,dat4$Body.site,dat4$Subject.Id)
 ## 
 ## Terms added sequentially (first to last)
 ## 
-##            Df SumsOfSqs  MeanSqs F.Model      R2 Pr(>F)    
-## bs_vec     13    1.0182 0.078325  3.3511 0.12427  0.001 ***
-## Residuals 307    7.1755 0.023373         0.87573           
-## Total     320    8.1937                  1.00000           
+##            Df SumsOfSqs MeanSqs F.Model      R2 Pr(>F)    
+## bs_vec     13    107.06  8.2354  2.6848 0.10208  0.001 ***
+## Residuals 307    941.71  3.0674         0.89792           
+## Total     320   1048.77                 1.00000           
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -317,10 +343,10 @@ run_bs_subj_adonis(dat6,dat4$Body.site,dat4$Subject.Id)
 ## 
 ## Terms added sequentially (first to last)
 ## 
-##            Df SumsOfSqs  MeanSqs F.Model      R2 Pr(>F)   
-## subj_vec  107    3.2944 0.030789  1.3385 0.40206  0.004 **
-## Residuals 213    4.8993 0.023002         0.59794          
-## Total     320    8.1937                  1.00000          
+##            Df SumsOfSqs MeanSqs F.Model      R2 Pr(>F)    
+## subj_vec  107    429.20  4.0112   1.379 0.40925  0.001 ***
+## Residuals 213    619.56  2.9087         0.59075           
+## Total     320   1048.77                 1.00000           
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -382,11 +408,11 @@ run_bs_subj_adonis(dat6,dat4$Body.site,dat4$Subject.Id)
 ## 
 ## Terms added sequentially (first to last)
 ## 
-##            Df SumsOfSqs  MeanSqs F.Model      R2 Pr(>F)    
-## bs_vec     13    1.0182 0.078325  3.6882 0.12427  0.001 ***
-## subj_vec  106    2.9070 0.027424  1.2914 0.35478  0.007 ** 
-## Residuals 201    4.2685 0.021236         0.52095           
-## Total     320    8.1937                  1.00000           
+##            Df SumsOfSqs MeanSqs F.Model      R2 Pr(>F)    
+## bs_vec     13    107.06  8.2354  3.0171 0.10208  0.001 ***
+## subj_vec  106    393.06  3.7081  1.3585 0.37478  0.002 ** 
+## Residuals 201    548.65  2.7296         0.52314           
+## Total     320   1048.77                 1.00000           
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -405,10 +431,10 @@ run_bs_subj_adonis(dat8,dat4$Body.site,dat4$Subject.Id)
 ## 
 ## Terms added sequentially (first to last)
 ## 
-##            Df SumsOfSqs  MeanSqs F.Model      R2 Pr(>F)    
-## bs_vec     13    2.6985 0.207574  13.053 0.35597  0.001 ***
-## Residuals 307    4.8822 0.015903         0.64403           
-## Total     320    7.5806                  1.00000           
+##            Df SumsOfSqs MeanSqs F.Model      R2 Pr(>F)   
+## bs_vec     13    1126.7  86.666  2.7239 0.10341  0.008 **
+## Residuals 307    9767.8  31.817         0.89659          
+## Total     320   10894.5                 1.00000          
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -452,10 +478,10 @@ run_bs_subj_adonis(dat8,dat4$Body.site,dat4$Subject.Id)
 ## 
 ## Terms added sequentially (first to last)
 ## 
-##            Df SumsOfSqs  MeanSqs F.Model     R2 Pr(>F)
-## subj_vec  107    2.2476 0.021006 0.83897 0.2965  0.849
-## Residuals 213    5.3330 0.025038         0.7035       
-## Total     320    7.5806                  1.0000       
+##            Df SumsOfSqs MeanSqs F.Model      R2 Pr(>F)
+## subj_vec  107    3412.0  31.888 0.90772 0.31318  0.756
+## Residuals 213    7482.5  35.129         0.68682       
+## Total     320   10894.5                 1.00000       
 ## 
 ## 	Homogeneity of multivariate dispersions
 ## 
@@ -515,11 +541,11 @@ run_bs_subj_adonis(dat8,dat4$Body.site,dat4$Subject.Id)
 ## 
 ## Terms added sequentially (first to last)
 ## 
-##            Df SumsOfSqs  MeanSqs F.Model      R2 Pr(>F)    
-## bs_vec     13    2.6985 0.207574 13.3268 0.35597  0.001 ***
-## subj_vec  106    1.7515 0.016523  1.0608 0.23104  0.336    
-## Residuals 201    3.1307 0.015576         0.41299           
-## Total     320    7.5806                  1.00000           
+##            Df SumsOfSqs MeanSqs F.Model      R2 Pr(>F)   
+## bs_vec     13    1126.7  86.666 2.60956 0.10341  0.005 **
+## subj_vec  106    3092.5  29.174 0.87845 0.28386  0.833   
+## Residuals 201    6675.4  33.211         0.61273          
+## Total     320   10894.5                 1.00000          
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -530,7 +556,7 @@ run_bs_subj_adonis(dat8,dat4$Body.site,dat4$Subject.Id)
 subject_perm(dat4,multiSubjects,dat6)
 ```
 
-![plot of chunk perm tests](figure/perm tests-1.png) 
+![plot of chunk perm tests](figure/perm tests-1.png)
 
 ```
 ## Score for intraperson hits =  1403 
@@ -637,25 +663,29 @@ top_score_mat <- as.data.frame(bintr(dat5,0.5))
 genotypes_plot(presence_mat,"Top CCs, 0.025X cutff, subtypes present > 0.2")
 ```
 
-![plot of chunk genotype_plots](figure/genotype_plots-1.png) 
+```
+## Error in genotypes_plot(presence_mat, "Top CCs, 0.025X cutff, subtypes present > 0.2"): argument "top_genos" is missing, with no default
+```
 
 ```r
 genotypes_plot(top_score_mat,"Top CCs, 0.025X cutoff, subtypes present > 0.5")
 ```
 
-![plot of chunk genotype_plots](figure/genotype_plots-2.png) 
+```
+## Error in genotypes_plot(top_score_mat, "Top CCs, 0.025X cutoff, subtypes present > 0.5"): argument "top_genos" is missing, with no default
+```
 
 ```r
 all_genotypes_plot(presence_mat,"All CCs, 0.025X cutoff, subtypes present > 0.2")
 ```
 
-![plot of chunk genotype_plots](figure/genotype_plots-3.png) 
+![plot of chunk genotype_plots](figure/genotype_plots-1.png)
 
 ```r
 all_genotypes_plot(top_score_mat,"All CCs, 0.025X cutoff, subtypes present > 0.5")
 ```
 
-![plot of chunk genotype_plots](figure/genotype_plots-4.png) 
+![plot of chunk genotype_plots](figure/genotype_plots-2.png)
 
 ```r
 for (i in bs) {
@@ -667,7 +697,9 @@ for (i in bs) {
 }
 ```
 
-![plot of chunk genotype_plots](figure/genotype_plots-5.png) ![plot of chunk genotype_plots](figure/genotype_plots-6.png) ![plot of chunk genotype_plots](figure/genotype_plots-7.png) ![plot of chunk genotype_plots](figure/genotype_plots-8.png) ![plot of chunk genotype_plots](figure/genotype_plots-9.png) ![plot of chunk genotype_plots](figure/genotype_plots-10.png) ![plot of chunk genotype_plots](figure/genotype_plots-11.png) ![plot of chunk genotype_plots](figure/genotype_plots-12.png) ![plot of chunk genotype_plots](figure/genotype_plots-13.png) ![plot of chunk genotype_plots](figure/genotype_plots-14.png) ![plot of chunk genotype_plots](figure/genotype_plots-15.png) ![plot of chunk genotype_plots](figure/genotype_plots-16.png) ![plot of chunk genotype_plots](figure/genotype_plots-17.png) ![plot of chunk genotype_plots](figure/genotype_plots-18.png) 
+```
+## Error in genotypes_plot(bs_df, paste(">0.2 beta: ", i)): argument "top_genos" is missing, with no default
+```
 
 ```r
 for (i in bs) {
@@ -679,7 +711,9 @@ for (i in bs) {
 }
 ```
 
-![plot of chunk genotype_plots](figure/genotype_plots-19.png) ![plot of chunk genotype_plots](figure/genotype_plots-20.png) ![plot of chunk genotype_plots](figure/genotype_plots-21.png) ![plot of chunk genotype_plots](figure/genotype_plots-22.png) ![plot of chunk genotype_plots](figure/genotype_plots-23.png) ![plot of chunk genotype_plots](figure/genotype_plots-24.png) ![plot of chunk genotype_plots](figure/genotype_plots-25.png) ![plot of chunk genotype_plots](figure/genotype_plots-26.png) ![plot of chunk genotype_plots](figure/genotype_plots-27.png) ![plot of chunk genotype_plots](figure/genotype_plots-28.png) ![plot of chunk genotype_plots](figure/genotype_plots-29.png) ![plot of chunk genotype_plots](figure/genotype_plots-30.png) ![plot of chunk genotype_plots](figure/genotype_plots-31.png) ![plot of chunk genotype_plots](figure/genotype_plots-32.png) 
+```
+## Error in genotypes_plot(bs_df, paste(">0.5 beta: ", i)): argument "top_genos" is missing, with no default
+```
 ###PCA
 
 ```r
@@ -694,7 +728,7 @@ for (i in bs) {
 }
 ```
 
-![plot of chunk PCA](figure/PCA-1.png) ![plot of chunk PCA](figure/PCA-2.png) ![plot of chunk PCA](figure/PCA-3.png) 
+![plot of chunk PCA](figure/PCA-1.png)![plot of chunk PCA](figure/PCA-2.png)![plot of chunk PCA](figure/PCA-3.png)
 
 ```r
 for (i in multiSubjects$Subject.Id) {
@@ -707,7 +741,7 @@ for (i in multiSubjects$Subject.Id) {
 }
 ```
 
-![plot of chunk PCA](figure/PCA-4.png) ![plot of chunk PCA](figure/PCA-5.png) ![plot of chunk PCA](figure/PCA-6.png) ![plot of chunk PCA](figure/PCA-7.png) ![plot of chunk PCA](figure/PCA-8.png) ![plot of chunk PCA](figure/PCA-9.png) ![plot of chunk PCA](figure/PCA-10.png) ![plot of chunk PCA](figure/PCA-11.png) 
+![plot of chunk PCA](figure/PCA-4.png)![plot of chunk PCA](figure/PCA-5.png)![plot of chunk PCA](figure/PCA-6.png)![plot of chunk PCA](figure/PCA-7.png)![plot of chunk PCA](figure/PCA-8.png)![plot of chunk PCA](figure/PCA-9.png)![plot of chunk PCA](figure/PCA-10.png)![plot of chunk PCA](figure/PCA-11.png)
 ###Session Info
 
 ```r
@@ -715,9 +749,9 @@ sessionInfo()
 ```
 
 ```
-## R version 3.2.1 (2015-06-18)
+## R version 3.2.3 (2015-12-10)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.10.5 (Yosemite)
+## Running under: OS X 10.11.3 (El Capitan)
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -726,17 +760,17 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-##  [1] assertthat_0.1     vegan_2.3-0        lattice_0.20-33   
-##  [4] permute_0.8-4      gdata_2.17.0       RColorBrewer_1.1-2
-##  [7] e1071_1.6-7        dplyr_0.4.2        reshape2_1.4.1    
-## [10] knitr_1.11        
+##  [1] assertthat_0.1     vegan_2.3-4        lattice_0.20-33   
+##  [4] permute_0.9-0      gdata_2.17.0       RColorBrewer_1.1-2
+##  [7] e1071_1.6-7        dplyr_0.4.3        reshape2_1.4.1    
+## [10] knitr_1.12.3      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.0     cluster_2.0.3   magrittr_1.5    MASS_7.3-44    
-##  [5] R6_2.1.1        stringr_1.0.0   plyr_1.8.3      tools_3.2.1    
-##  [9] parallel_3.2.1  grid_3.2.1      nlme_3.1-122    mgcv_1.8-7     
+##  [1] Rcpp_0.12.3     cluster_2.0.3   magrittr_1.5    MASS_7.3-45    
+##  [5] R6_2.1.2        stringr_1.0.0   plyr_1.8.3      tools_3.2.3    
+##  [9] parallel_3.2.3  grid_3.2.3      nlme_3.1-125    mgcv_1.8-11    
 ## [13] DBI_0.3.1       class_7.3-14    gtools_3.5.0    lazyeval_0.1.10
-## [17] Matrix_1.2-2    formatR_1.2     evaluate_0.7.2  stringi_0.5-5  
-## [21] methods_3.2.1
+## [17] Matrix_1.2-3    formatR_1.2.1   evaluate_0.8    stringi_1.0-1  
+## [21] methods_3.2.3
 ```
 

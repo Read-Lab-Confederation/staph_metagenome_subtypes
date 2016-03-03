@@ -13,22 +13,33 @@ print(date())
 ```
 
 ```
-## [1] "Mon Nov  2 11:04:00 2015"
+## [1] "Wed Mar  2 19:05:10 2016"
 ```
 
 ```r
 library(RgoogleMaps)
+```
+
+```
+## Error in library(RgoogleMaps): there is no package called 'RgoogleMaps'
+```
+
+```r
 library(dplyr)
 ```
 
 ```
 ## 
 ## Attaching package: 'dplyr'
-## 
+```
+
+```
 ## The following objects are masked from 'package:stats':
 ## 
 ##     filter, lag
-## 
+```
+
+```
 ## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union
@@ -40,8 +51,14 @@ library(vegan)
 
 ```
 ## Loading required package: permute
+```
+
+```
 ## Loading required package: lattice
-## This is vegan 2.3-0
+```
+
+```
+## This is vegan 2.3-4
 ```
 
 ```r
@@ -49,12 +66,7 @@ library(ade4)
 ```
 
 ```
-## 
-## Attaching package: 'ade4'
-## 
-## The following object is masked from 'package:vegan':
-## 
-##     cca
+## Error in library(ade4): there is no package called 'ade4'
 ```
 
 ```r
@@ -65,11 +77,15 @@ library(gtools)
 ```
 ## 
 ## Attaching package: 'gtools'
-## 
+```
+
+```
 ## The following object is masked from 'package:e1071':
 ## 
 ##     permutations
-## 
+```
+
+```
 ## The following object is masked from 'package:permute':
 ## 
 ##     permute
@@ -173,13 +189,13 @@ top_score_mat <- as.data.frame(bintr(staph_mat,0.5))
 all_genotypes_plot(presence_mat,"All NYC samples, subtypes present > 0.2")
 ```
 
-![plot of chunk NYC_genotypes](figure/NYC_genotypes-1.png) 
+![plot of chunk NYC_genotypes](figure/NYC_genotypes-1.png)
 
 ```r
 all_genotypes_plot(top_score_mat,"All NYC samples, subtypes present > 0.5")
 ```
 
-![plot of chunk NYC_genotypes](figure/NYC_genotypes-2.png) 
+![plot of chunk NYC_genotypes](figure/NYC_genotypes-2.png)
 
 ### Color stations reporting S. aureus
 
@@ -225,9 +241,27 @@ alllons <- as.numeric(as.character(NYCdata$Logitude))
 
 ```r
 gmap1 <- GetMap(center = c(lat = 40.7127, lon = -74.0059), size = c(640, 640), zoom = 11, GRAYSCALE = TRUE)
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "GetMap"
+```
+
+```r
 #centered on Queens
 gmap2 <- GetMap(center = c(lat = 40.7500, lon = -73.8667), size = c(640, 640), zoom = 11, GRAYSCALE = TRUE)
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "GetMap"
+```
+
+```r
 gmap3 <- GetMap(center = c(lat = 40.7500, lon = -73.8667), size = c(640, 640), zoom = 10, GRAYSCALE = TRUE)
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "GetMap"
 ```
 ### Make plots of overall coverage
  
@@ -235,6 +269,13 @@ gmap3 <- GetMap(center = c(lat = 40.7500, lon = -73.8667), size = c(640, 640), z
 ```r
 png("./NYC_subway_plots/all_stations_z11.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "PlotOnStaticMap"
+```
+
+```r
 dev.off()
 ```
 
@@ -246,6 +287,13 @@ dev.off()
 ```r
 png("./NYC_subway_plots/all_stations_z10.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap3, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "PlotOnStaticMap"
+```
+
+```r
 dev.off()
 ```
 
@@ -257,6 +305,13 @@ dev.off()
 ```r
 png("./NYC_subway_plots/all_staph_z11.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = cols_staph)
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "PlotOnStaticMap"
+```
+
+```r
 dev.off()
 ```
 
@@ -268,6 +323,13 @@ dev.off()
 ```r
 png("./NYC_subway_plots/all_staph_z10.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap3, lat = lats , lon = lons, cex=1.5,pch=20, col = cols_staph)
+```
+
+```
+## Error in eval(expr, envir, enclos): could not find function "PlotOnStaticMap"
+```
+
+```r
 dev.off()
 ```
 
@@ -284,6 +346,10 @@ for (i in colnames(staph_df)[1:33]){
     plot_CC_types(CC = i, mat = staph_df, map10 = gmap3, map11 = gmap2, plotdir = "./NYC_subway_plots/", SRA_file = staph_df_coords)
 
 }
+```
+
+```
+## Error in library(RgoogleMaps): there is no package called 'RgoogleMaps'
 ```
 ### Mantel test for spatial autocorrelation of Staph aureus genotypes
 
@@ -325,13 +391,13 @@ hamm_distance_vector <- hamm_distance_vector[-(zero_stations)]
 hist(geog_distance_vector, breaks = 50)
 ```
 
-![plot of chunk hamming_analysis](figure/hamming_analysis-1.png) 
+![plot of chunk hamming_analysis](figure/hamming_analysis-1.png)
 
 ```r
 hist(hamm_distance_vector)
 ```
 
-![plot of chunk hamming_analysis](figure/hamming_analysis-2.png) 
+![plot of chunk hamming_analysis](figure/hamming_analysis-2.png)
 
 ```r
 boxplot(geog_distance_vector ~ hamm_distance_vector, xlab = "Hamming distance", ylab = "km")
@@ -340,7 +406,7 @@ reg <- lm(geog_distance_vector ~ as.numeric(hamm_distance_vector))
 segments(x0=1,x1=7,y0=reg$coefficients[1],y1=reg$coefficients[1]+(reg$coefficients[2]*6), col = "red")
 ```
 
-![plot of chunk hamming_analysis](figure/hamming_analysis-3.png) 
+![plot of chunk hamming_analysis](figure/hamming_analysis-3.png)
 
 ```r
 summary(reg)
@@ -433,9 +499,9 @@ sessionInfo()
 ```
 
 ```
-## R version 3.2.1 (2015-06-18)
+## R version 3.2.3 (2015-12-10)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.10.5 (Yosemite)
+## Running under: OS X 10.11.3 (El Capitan)
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -444,18 +510,16 @@ sessionInfo()
 ## [1] stats     graphics  grDevices utils     datasets  base     
 ## 
 ## other attached packages:
-##  [1] assertthat_0.1      RColorBrewer_1.1-2  gtools_3.5.0       
-##  [4] e1071_1.6-7         ade4_1.7-2          vegan_2.3-0        
-##  [7] lattice_0.20-33     permute_0.8-4       dplyr_0.4.2        
-## [10] RgoogleMaps_1.2.0.7 knitr_1.11         
+## [1] assertthat_0.1     RColorBrewer_1.1-2 gtools_3.5.0      
+## [4] e1071_1.6-7        vegan_2.3-4        lattice_0.20-33   
+## [7] permute_0.9-0      dplyr_0.4.3        knitr_1.12.3      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.0     cluster_2.0.3   magrittr_1.5    MASS_7.3-44    
-##  [5] R6_2.1.1        stringr_1.0.0   tools_3.2.1     parallel_3.2.1 
-##  [9] grid_3.2.1      nlme_3.1-122    mgcv_1.8-7      png_0.1-7      
-## [13] DBI_0.3.1       class_7.3-14    lazyeval_0.1.10 RJSONIO_1.3-0  
-## [17] Matrix_1.2-2    formatR_1.2     evaluate_0.7.2  stringi_0.5-5  
-## [21] methods_3.2.1
+##  [1] Rcpp_0.12.3     class_7.3-14    MASS_7.3-45     grid_3.2.3     
+##  [5] R6_2.1.2        nlme_3.1-125    DBI_0.3.1       formatR_1.2.1  
+##  [9] magrittr_1.5    evaluate_0.8    stringi_1.0-1   lazyeval_0.1.10
+## [13] Matrix_1.2-3    tools_3.2.3     stringr_1.0.0   parallel_3.2.3 
+## [17] cluster_2.0.3   mgcv_1.8-11     methods_3.2.3
 ```
 
 

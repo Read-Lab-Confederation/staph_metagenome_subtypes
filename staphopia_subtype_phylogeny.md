@@ -14,65 +14,110 @@ db <- staphopia_logon()
 ```
 ## 
 ## Attaching package: 'dplyr'
-## 
+```
+
+```
 ## The following objects are masked from 'package:stats':
 ## 
 ##     filter, lag
-## 
+```
+
+```
 ## The following objects are masked from 'package:base':
 ## 
 ##     intersect, setdiff, setequal, union
 ```
 
+```
+## Error: RPostgreSQL package required to connect to postgres db
+```
+
 ```r
 library(staphopiaRtools) 
+```
+
+```
+## Error in library(staphopiaRtools): there is no package called 'staphopiaRtools'
+```
+
+```r
 library(assertthat)
 library(IRanges)
 ```
 
 ```
 ## Loading required package: methods
+```
+
+```
 ## Loading required package: BiocGenerics
+```
+
+```
 ## Loading required package: parallel
+```
+
+```
 ## 
 ## Attaching package: 'BiocGenerics'
-## 
+```
+
+```
 ## The following objects are masked from 'package:parallel':
 ## 
 ##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
 ##     clusterExport, clusterMap, parApply, parCapply, parLapply,
 ##     parLapplyLB, parRapply, parSapply, parSapplyLB
-## 
+```
+
+```
 ## The following objects are masked from 'package:dplyr':
 ## 
 ##     combine, intersect, setdiff, union
+```
+
+```
+## The following objects are masked from 'package:stats':
 ## 
-## The following object is masked from 'package:stats':
-## 
-##     xtabs
-## 
+##     IQR, mad, xtabs
+```
+
+```
 ## The following objects are masked from 'package:base':
 ## 
 ##     anyDuplicated, append, as.data.frame, as.vector, cbind,
 ##     colnames, do.call, duplicated, eval, evalq, Filter, Find, get,
-##     intersect, is.unsorted, lapply, Map, mapply, match, mget,
-##     order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-##     rbind, Reduce, rep.int, rownames, sapply, setdiff, sort,
-##     table, tapply, union, unique, unlist, unsplit
-## 
+##     grep, grepl, intersect, is.unsorted, lapply, lengths, Map,
+##     mapply, match, mget, order, paste, pmax, pmax.int, pmin,
+##     pmin.int, Position, rank, rbind, Reduce, rownames, sapply,
+##     setdiff, sort, table, tapply, union, unique, unlist, unsplit
+```
+
+```
 ## Loading required package: S4Vectors
+```
+
+```
 ## Loading required package: stats4
-## Creating a generic function for 'nchar' from package 'base' in package 'S4Vectors'
+```
+
+```
 ## 
 ## Attaching package: 'S4Vectors'
-## 
+```
+
+```
 ## The following object is masked from 'package:dplyr':
 ## 
 ##     rename
-## 
+```
+
+```
 ## 
 ## Attaching package: 'IRanges'
-## 
+```
+
+```
 ## The following objects are masked from 'package:dplyr':
 ## 
 ##     collapse, desc, slice
@@ -188,9 +233,9 @@ sessionInfo()
 ```
 
 ```
-## R version 3.2.1 (2015-06-18)
+## R version 3.2.3 (2015-12-10)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: OS X 10.10.5 (Yosemite)
+## Running under: OS X 10.11.3 (El Capitan)
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -200,18 +245,16 @@ sessionInfo()
 ## [8] datasets  base     
 ## 
 ## other attached packages:
-##  [1] phangorn_1.99.14           ape_3.3                   
-##  [3] Biostrings_2.36.2          XVector_0.8.0             
-##  [5] IRanges_2.2.5              S4Vectors_0.6.3           
-##  [7] BiocGenerics_0.14.0        assertthat_0.1            
-##  [9] staphopiaRtools_0.0.0.9000 dplyr_0.4.2               
-## [11] knitr_1.11                
+##  [1] phangorn_2.0.2      ape_3.4             Biostrings_2.38.3  
+##  [4] XVector_0.10.0      IRanges_2.4.6       S4Vectors_0.8.5    
+##  [7] BiocGenerics_0.16.1 assertthat_0.1      dplyr_0.4.3        
+## [10] knitr_1.12.3       
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] igraph_1.0.1    Rcpp_0.12.0     magrittr_1.5    nnls_1.4       
-##  [5] zlibbioc_1.14.0 lattice_0.20-33 R6_2.1.1        quadprog_1.5-5 
-##  [9] stringr_1.0.0   tools_3.2.1     grid_3.2.1      nlme_3.1-122   
-## [13] DBI_0.3.1       digest_0.6.8    RPostgreSQL_0.4 Matrix_1.2-2   
-## [17] formatR_1.2     evaluate_0.7.2  stringi_0.5-5
+##  [1] igraph_1.0.1    Rcpp_0.12.3     magrittr_1.5    zlibbioc_1.16.0
+##  [5] nnls_1.4        lattice_0.20-33 R6_2.1.2        quadprog_1.5-5 
+##  [9] stringr_1.0.0   tools_3.2.3     grid_3.2.3      nlme_3.1-125   
+## [13] DBI_0.3.1       digest_0.6.9    Matrix_1.2-3    formatR_1.2.1  
+## [17] evaluate_0.8    stringi_1.0-1
 ```
 
