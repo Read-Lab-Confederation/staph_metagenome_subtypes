@@ -7,7 +7,7 @@ all: core 40CC
 40CC: HMP_coverage40.md cov0.5X_analysis_40.md cov0.025X_analysis_40.md
 
 #core analysis
-core: HMP_coverage.md cov0.5X_analysis1.md cov0.025X_analysis1.md unfiltered_analysis1.md NYC_Data.md synthetic_data_plots.md spec_sens_plot.md subtyping_tree_figure.md
+core: HMP_coverage.md cov0.5X_analysis1.md cov0.025X_analysis1.md unfiltered_analysis1.md NYC_Data.md synthetic_data_plots.md spec_sens_plot.md subtyping_tree_figure.md ST_tree_figure.md
 
 HMP_coverage.md: ./Data/Final_HMP_Matrix.csv ./staph_metagenome_tools.R ./HMP_coverage.Rmd
 	Rscript -e "library(knitr); knit('./HMP_coverage.Rmd')"
@@ -48,6 +48,8 @@ cov0.5X_analysis_40.md: ./staph_metagenome_tools.R ./Data/cov40_0.5 cov0.5X_anal
 cov0.025X_analysis_40.md: ./staph_metagenome_tools.R ./Data/cov40_0.025 cov0.025X_analysis_40.Rmd
 	Rscript -e "library(knitr); knit('./cov0.025X_analysis_40.Rmd')"
 
+ST_tree_figure.md: ~/dm ./staph_metagenome_tools.R ./Data/S2_Data.csv
+	Rscript -e "library(knitr); knit('ST_tree_figure.Rmd')"
 	
 #warning: this script takes a day to run and creates a large cache
 staphopia_subtype_phylogeny.md ~/dm: ./Data/strains_used_for_subtype_tests.csv staphopia_subtype_phylogeny.Rmd

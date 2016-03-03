@@ -10,7 +10,7 @@ print(date())
 ```
 
 ```
-## [1] "Wed Mar  2 17:50:58 2016"
+## [1] "Thu Mar  3 09:18:20 2016"
 ```
 
 This workflow combines binstrain and coverage data from our Staph metagenome analysis and produces useful plots.  Also save data tables filtered at two different coverage levels for subsequent analysis in other workflows.
@@ -49,6 +49,10 @@ source('./staph_metagenome_tools.R')
 
 ```r
 covs <- gs_title("Coverage_Staph_MeCA") # note: might need to register app with google here .
+```
+
+```
+## Auto-refreshing stale OAuth token.
 ```
 
 ```

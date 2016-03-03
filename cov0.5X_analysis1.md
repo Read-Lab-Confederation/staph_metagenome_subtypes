@@ -13,7 +13,7 @@ print(date())
 ```
 
 ```
-## [1] "Wed Mar  2 17:51:09 2016"
+## [1] "Thu Mar  3 09:18:31 2016"
 ```
 
 ```r
@@ -132,9 +132,9 @@ source('./staph_metagenome_tools.R', echo=TRUE)
 ## +     x <- as.matrix(w[, -1])
 ##  .... [TRUNCATED] 
 ## 
-## > genotypes_plot <- function(mat, tit, top_genos) {
+## > genotypes_plot <- function(mat, tit, top_genos = vector()) {
 ## +     if (length(top_genos) == 0) {
-## +         top_genos <- c("CC_30", "CC_8", "CC_45", "CC_398", " ..." ... [TRUNCATED] 
+## +         top_genos <- c("CC_30", "CC_8", "CC_45",  .... [TRUNCATED] 
 ## 
 ## > all_genotypes_plot <- function(mat, tit) {
 ## +     cS <- colSums(mat)
@@ -600,29 +600,25 @@ top_score_mat <- as.data.frame(bintr(dat5,0.5))
 genotypes_plot(presence_mat,"All samples, subtypes present > 0.2")
 ```
 
-```
-## Error in genotypes_plot(presence_mat, "All samples, subtypes present > 0.2"): argument "top_genos" is missing, with no default
-```
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-1.png)
 
 ```r
 genotypes_plot(top_score_mat,"All samples, subtypes present > 0.5")
 ```
 
-```
-## Error in genotypes_plot(top_score_mat, "All samples, subtypes present > 0.5"): argument "top_genos" is missing, with no default
-```
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-2.png)
 
 ```r
 all_genotypes_plot(presence_mat,"All CCs, 0.5X cutoff, subtypes present > 0.2")
 ```
 
-![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-1.png)
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-3.png)
 
 ```r
 all_genotypes_plot(top_score_mat,"All CCs, 0.5X cutoff, subtypes present > 0.5")
 ```
 
-![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-2.png)
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-4.png)
 
 ```r
 for (i in bs) {
@@ -634,9 +630,7 @@ for (i in bs) {
 }
 ```
 
-```
-## Error in genotypes_plot(bs_df, paste(">0.2 beta: ", i)): argument "top_genos" is missing, with no default
-```
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-5.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-6.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-7.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-8.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-9.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-10.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-11.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-12.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-13.png)
 
 ```r
 for (i in bs) {
@@ -648,9 +642,7 @@ for (i in bs) {
 }
 ```
 
-```
-## Error in genotypes_plot(bs_df, paste(">0.5 beta: ", i)): argument "top_genos" is missing, with no default
-```
+![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-14.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-15.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-16.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-17.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-18.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-19.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-20.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-21.png)![plot of chunk 0.5Xsubtype_plots](figure/0.5Xsubtype_plots-22.png)
 ###PCA
 
 ```r
