@@ -39,7 +39,7 @@ Phylogenetic plots
 
 [subtyping_tree_figure.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/subtyping_tree_figure.md)
 
-[ST_tree_figure.md]((https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/ST_tree_figure.md))
+[ST_tree_figure.md](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/ST_tree_figure.md)
 
 Misc. plots used in paper
 
