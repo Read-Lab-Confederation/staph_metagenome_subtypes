@@ -49,5 +49,34 @@ for(i in MLST_vec[,"MLST.type"]){
 }
 ```
 
+Load in the binstrain assignments for the ST5 and dive into those that were assigned to ST5, those that had a strong evidecne for assingment to another strain (binstrain > 0.8), and thse that had little evidence fr either
+
+```{r}
+St5_assign <- read.table("./Data/Final_highest_Beta_real_ST_5.txt",header = TRUE, stringsAsFactors = FALSE)
+CC5_St5 <- filter(St5_assign, grepl("CC_5",V2)) %>% select(V1)
+ST5_not_CC5 <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 > 0.7) %>% select(V1)
+ST5_not_anything <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 <= 0.7) %>% select(V1)
+```
+### Now print the different assignments
+```{r ST5_classed_as_CC5}
+tips2label <- which(NJ$tip.label %in% CC5_St5[,"V1"])
+tit <- "ST5 strains binstrain type CC5"
+plot(NJ, "unrooted", show.tip.label = FALSE, main = tit)
+tiplabels(tip = tips2label, pch= 20, col = "blue")
+```
+
+```{r ST5_classed_as_not_CC5}
+tips2label <- which(NJ$tip.label %in% ST5_not_CC5[,"V1"])
+tit <- "ST5 strains binstrain type another CC"
+plot(NJ, "unrooted", show.tip.label = FALSE, main = tit)
+tiplabels(tip = tips2label, pch= 20, col = "blue")
+```
+
+```{r ST5_classed_as_nothing}
+tips2label <- which(NJ$tip.label %in% ST5_not_anything[,"V1"])
+tit <- "ST5 strains binstrain type another CC but low score"
+plot(NJ, "unrooted", show.tip.label = FALSE, main = tit)
+tiplabels(tip = tips2label, pch= 20, col = "blue")
+```
 
 

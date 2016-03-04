@@ -48,7 +48,7 @@ cov0.5X_analysis_40.md: ./staph_metagenome_tools.R ./Data/cov40_0.5 cov0.5X_anal
 cov0.025X_analysis_40.md: ./staph_metagenome_tools.R ./Data/cov40_0.025 cov0.025X_analysis_40.Rmd
 	Rscript -e "library(knitr); knit('./cov0.025X_analysis_40.Rmd')"
 
-ST_tree_figure.md: ~/dm ./staph_metagenome_tools.R ./Data/S2_Data.csv
+ST_tree_figure.md: ~/dm ./staph_metagenome_tools.R ./Data/S2_Data.csv ./Data/Final_highest_Beta_real_ST_5.txt ST_tree_figure.Rmd
 	Rscript -e "library(knitr); knit('ST_tree_figure.Rmd')"
 	
 #warning: this script takes a day to run and creates a large cache
