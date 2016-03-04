@@ -52,7 +52,7 @@ for(i in MLST_vec[,"MLST.type"]){
 Load in the binstrain assignments for the ST5 and dive into those that were assigned to ST5, those that had a strong evidecne for assingment to another strain (binstrain > 0.8), and thse that had little evidence fr either
 
 ```{r}
-St5_assign <- read.table("./Data/Final_highest_Beta_real_ST_5.txt",header = TRUE, stringsAsFactors = FALSE)
+St5_assign <- read.table("./Data/Final_highest_Beta_real_ST_5.txt",header = FALSE, stringsAsFactors = FALSE)
 CC5_St5 <- filter(St5_assign, grepl("CC_5",V2)) %>% select(V1)
 ST5_not_CC5 <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 > 0.7) %>% select(V1)
 ST5_not_anything <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 <= 0.7) %>% select(V1)

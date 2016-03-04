@@ -87,100 +87,40 @@ Load in the binstrain assignments for the ST5 and dive into those that were assi
 
 
 ```r
-St5_assign <- read.table("./Data/Final_highest_Beta_real_ST_5.txt",header = TRUE, stringsAsFactors = FALSE)
+St5_assign <- read.table("./Data/Final_highest_Beta_real_ST_5.txt",header = FALSE, stringsAsFactors = FALSE)
 CC5_St5 <- filter(St5_assign, grepl("CC_5",V2)) %>% select(V1)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'V2' not found
-```
-
-```r
 ST5_not_CC5 <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 > 0.7) %>% select(V1)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'V2' not found
-```
-
-```r
 ST5_not_anything <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 <= 0.7) %>% select(V1)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'V2' not found
 ```
 ### Now print the different assignments
 
 ```r
 tips2label <- which(NJ$tip.label %in% CC5_St5[,"V1"])
-```
-
-```
-## Error in match(x, table, nomatch = 0L): object 'CC5_St5' not found
-```
-
-```r
 tit <- "ST5 strains binstrain type CC5"
 plot(NJ, "unrooted", show.tip.label = FALSE, main = tit)
+tiplabels(tip = tips2label, pch= 20, col = "blue")
 ```
 
 ![plot of chunk ST5_classed_as_CC5](figure/ST5_classed_as_CC5-1.png)
 
-```r
-tiplabels(tip = tips2label, pch= 20, col = "blue")
-```
-
-```
-## Error in tiplabels(tip = tips2label, pch = 20, col = "blue"): object 'tips2label' not found
-```
-
 
 ```r
 tips2label <- which(NJ$tip.label %in% ST5_not_CC5[,"V1"])
-```
-
-```
-## Error in match(x, table, nomatch = 0L): object 'ST5_not_CC5' not found
-```
-
-```r
 tit <- "ST5 strains binstrain type another CC"
 plot(NJ, "unrooted", show.tip.label = FALSE, main = tit)
+tiplabels(tip = tips2label, pch= 20, col = "blue")
 ```
 
 ![plot of chunk ST5_classed_as_not_CC5](figure/ST5_classed_as_not_CC5-1.png)
 
-```r
-tiplabels(tip = tips2label, pch= 20, col = "blue")
-```
-
-```
-## Error in tiplabels(tip = tips2label, pch = 20, col = "blue"): object 'tips2label' not found
-```
-
 
 ```r
 tips2label <- which(NJ$tip.label %in% ST5_not_anything[,"V1"])
-```
-
-```
-## Error in match(x, table, nomatch = 0L): object 'ST5_not_anything' not found
-```
-
-```r
 tit <- "ST5 strains binstrain type another CC but low score"
 plot(NJ, "unrooted", show.tip.label = FALSE, main = tit)
-```
-
-![plot of chunk ST5_classed_as_nothing](figure/ST5_classed_as_nothing-1.png)
-
-```r
 tiplabels(tip = tips2label, pch= 20, col = "blue")
 ```
 
-```
-## Error in tiplabels(tip = tips2label, pch = 20, col = "blue"): object 'tips2label' not found
-```
+![plot of chunk ST5_classed_as_nothing](figure/ST5_classed_as_nothing-1.png)
 
 
