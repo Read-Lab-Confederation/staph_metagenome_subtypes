@@ -89,8 +89,8 @@ Load in the binstrain assignments for the ST5 and dive into those that were assi
 ```r
 St5_assign <- read.table("./Data/Final_highest_Beta_real_ST_5.txt",header = FALSE, stringsAsFactors = FALSE)
 CC5_St5 <- filter(St5_assign, grepl("CC_5",V2)) %>% select(V1)
-ST5_not_CC5 <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 > 0.7) %>% select(V1)
-ST5_not_anything <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 <= 0.7) %>% select(V1)
+ST5_not_CC5 <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 > 0.8) %>% select(V1)
+ST5_not_anything <- filter(St5_assign, !grepl("CC_5",V2)) %>% filter(V3 <= 0.8) %>% select(V1)
 ```
 ### Now print the different assignments
 
@@ -106,7 +106,7 @@ tiplabels(tip = tips2label, pch= 20, col = "blue")
 
 ```r
 tips2label <- which(NJ$tip.label %in% ST5_not_CC5[,"V1"])
-tit <- "ST5 strains binstrain type another CC"
+tit <- "ST5 strains binstrain type another CC low score"
 plot(NJ, "unrooted", show.tip.label = FALSE, main = tit)
 tiplabels(tip = tips2label, pch= 20, col = "blue")
 ```
@@ -116,11 +116,11 @@ tiplabels(tip = tips2label, pch= 20, col = "blue")
 
 ```r
 tips2label <- which(NJ$tip.label %in% ST5_not_anything[,"V1"])
-tit <- "ST5 strains binstrain type another CC but low score"
+tit <- "ST5 strains binstrain type another CC"
 plot(NJ, "unrooted", show.tip.label = FALSE, main = tit)
 tiplabels(tip = tips2label, pch= 20, col = "blue")
 ```
 
-![plot of chunk ST5_classed_as_nothing](figure/ST5_classed_as_nothing-1.png)
+![plot of chunk ST5](figure/ST5-1.png)
 
 
