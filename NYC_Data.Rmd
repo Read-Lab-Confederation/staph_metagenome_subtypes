@@ -93,6 +93,13 @@ all_genotypes_plot(presence_mat,"All NYC samples, subtypes present > 0.2")
 all_genotypes_plot(top_score_mat,"All NYC samples, subtypes present > 0.5")
 ```
 
+```{r Figure_7}
+pdf(file = "./Figure_7.pdf")
+all_genotypes_plot(presence_mat,"")
+dev.off()
+```
+
+
 ### Color stations reporting S. aureus
 ```{r}
 locations_with_runs <- filter(NYCdata_SRA, !is.na(Run) ) %>%
