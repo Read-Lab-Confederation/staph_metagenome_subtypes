@@ -123,6 +123,34 @@ gmap3 <- GetMap(center = c(lat = 40.7500, lon = -73.8667), size = c(640, 640), z
 ```
 ### Make plots of overall coverage
  
+```{r Figure_8a}
+pdf("./Figure_8a.pdf")
+PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")
+dev.off()
+```
+
+```{r Figure_8b}
+pdf("./Figure_8b.pdf")
+PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = cols_staph)
+dev.off()
+```
+
+```{r Figure_8c}
+pdf("./Figure_8c.pdf")
+crows <- which(staph_df_coords$CC_8 > 0.2)
+CC_df <- slice(staph_df_coords, crows) %>% select(Latitude,Logitude)
+PlotOnStaticMap(gmap2, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = "red")
+dev.off()
+```
+
+```{r Figure_8d}
+pdf("./Figure_8d.pdf")
+crows <- which(staph_df_coords$CC_22 > 0.2)
+CC_df <- slice(staph_df_coords, crows) %>% select(Latitude,Logitude)
+PlotOnStaticMap(gmap2, lat = as.numeric(CC_df$Latitude) , lon = as.numeric(CC_df$Logitude), cex=1.5,pch=20, col = "red")
+dev.off()
+```
+
 ```{r map_plots}
 png("./NYC_subway_plots/all_stations_z11.png",width=640, height =640, res = 75)
 PlotOnStaticMap(gmap2, lat = lats , lon = lons, cex=1.5,pch=20, col = "blue")

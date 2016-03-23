@@ -23,7 +23,7 @@ source('./staph_metagenome_tools.R', echo=TRUE)
 
 ###Read in data file created in earlier pipeline
 
-```{r rees_covtable}
+```{r read_covtable}
 dat4 <- read.table("./Data/cov0.025")
 
 ```
@@ -68,6 +68,8 @@ presence_mat <- as.data.frame(bintr(dat5,0.2))
 top_score_mat <- as.data.frame(bintr(dat5,0.5))
 # png("~/Dropbox/ARTICLES_BY_TDR/2015-staph-metagenome/HMP_barchart.png",width=640, height =640, res = 75)
 # dev.off()
+
+
 genotypes_plot(presence_mat,"Top CCs, 0.025X cutff, subtypes present > 0.2")
 genotypes_plot(top_score_mat,"Top CCs, 0.025X cutoff, subtypes present > 0.5")
 
@@ -90,6 +92,40 @@ for (i in bs) {
   }
 }
 ```
+
+```{r figure_4}
+pdf(file = "./Figure_4.pdf")
+all_genotypes_plot(presence_mat,"","anterior_nares")
+dev.off()
+```
+
+```{r figure_5a}
+pdf(file = "./Figure_5a.pdf")
+bss_rows <- which(dat4$Body.site == "anterior nares")
+bs_df <- slice(presence_mat,bss_rows)
+tg <- c("CC_30","CC_8","CC_45","CC_398","CC_133","CC_59","CC_15","CC_97","CC_5")
+genotypes_plot(bs_df,tit = "",tg)
+dev.off()
+```
+
+```{r figure_5b}
+pdf(file = "./Figure_5b.pdf")
+bss_rows <- which(dat4$Body.site == "buccal mucosa")
+bs_df <- slice(presence_mat,bss_rows)
+tg <- c("CC_30","CC_8","CC_45","CC_398","CC_133","CC_59","CC_15","CC_97","CC_5")
+genotypes_plot(bs_df,tit = "",tg)
+dev.off()
+```
+
+```{r figure_5c}
+pdf(file = "./Figure_5c.pdf")
+bss_rows <- which(dat4$Body.site == "tongue dorsum")
+bs_df <- slice(presence_mat,bss_rows)
+tg <- c("CC_30","CC_8","CC_45","CC_398","CC_133","CC_59","CC_15","CC_97","CC_5")
+genotypes_plot(bs_df,tit = "",tg)
+dev.off()
+```
+
 ###PCA
 ```{r PCA}
 par(mfrow=c(2,2))

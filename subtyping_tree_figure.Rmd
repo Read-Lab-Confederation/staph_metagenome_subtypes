@@ -74,17 +74,23 @@ add.scale.bar()
 ```
 Check for senstivity
 
-```{r sensitivity_tree}
+```{r Figure_3}
+pdf(file = "./Figure_3.pdf")
 tl <- filter(strains,Beta > 0.80) %>% select(Sample.Id.of.0.75X)
-plot(NJ, "unrooted", show.tip.label = FALSE, main = "Sensitivity: beta > 0.65")
+plot(NJ, "unrooted", show.tip.label = FALSE, main = "")
 tps <- which(NJ$tip.label %in% tl$Sample.Id.of.0.75X)
 tiplabels(tip = tps, pch= 20, col = "red")
+add.scale.bar()
+dev.off()
 ```
 
 Look at SNP#1752540, which is common in ST398
-```{r SNP#1752540}
+```{r Figure_6}
+pdf(file = "./Figure_6.pdf")
 SNP <- read.table("./Data/SNP1752540_sample_tags.txt", header = FALSE, stringsAsFactors = FALSE)
 SNPtps <- which(NJ$tip.label %in% SNP$V1)
-plot(NJ, "unrooted", show.tip.label = FALSE, main = "SNP#1752540")
+plot(NJ, "unrooted", show.tip.label = FALSE, main = "")
 tiplabels(tip = SNPtps, pch= 20, col = "red")
+add.scale.bar()
+dev.off()
 ```
