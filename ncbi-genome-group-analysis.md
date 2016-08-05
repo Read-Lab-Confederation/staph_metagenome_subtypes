@@ -49,6 +49,7 @@ ls *.tfa | sed 's/.tfa//' | xargs -I {} makeblastdb -in {}.tfa -out blastdb/{} -
 
 # Run the in house script 'determine-mlst.py'
 cd ../../
+mkdir -p data/blast-results/
 python ../scripts/determine-mlst.py data/completed-genomes/ data/blast-results/ \
                                     ~/bin/blastn data/mlst/blastdb data/mlst/saureus.txt > data/genome-mlst.txt
 
