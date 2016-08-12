@@ -1,1 +1,11 @@
-BinStrain
+Package: BinStrain
+Type: Package
+Title: Statistical modeling for SNP based genotyping of mixed bacterial
+        strains
+Version: 1.0
+Date: 2013-10-28
+Author: Sandeep J. Joseph and Ben Li
+Maintainer: Sandeep J. Joseph<sandeepjoseph@emory.edu> and Ben
+        Li<ben.li@emory.edu>
+Description: Uses a binomial model to describe the observed alternative allele (SNP) in a  target genomic region (or the whole genome). A well-established two step method is used to estimate the proportion of serovar strain-specific SNPs present in pure or mixed infection of genotypes. First step is a direct estimate by using the sparsity of the design matrix. Quadratic optimization method is involved in the second step.  Originally developed for direct sequencing of C. trachomatis from clinical samples.
+License: GPL-2
