@@ -44,4 +44,5 @@ How to generate the SNP patern Matrix.
         1. Generate a whole genome alignment from the selected reference genomes using ProgreesiveMauve (http://darlinglab.org/mauve/user-guide/introduction.html)
         2. Use the "export SNPs" function in MAUVE to export the SNPs from the alignment.
         3. Trim the positions where missing or gaps (-) are present at any of the SNP sites of the reference genomes in order to make sure we are getting the core SNPs.
-        4. Use the 
+        4. Use the awk script Format_SNP_Pattern.awk to format the output file from step 3 into the input SNPpattern file for binstrain
+                Usage: awk Format_SNP_Pattern.awk inputfile > Final_SNP_patternFile.txt
