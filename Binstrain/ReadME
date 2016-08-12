@@ -36,4 +36,12 @@ If you want to download the raw sequence data generated from Human Microbiome Pr
 
 Then run the following command in the terminal ./binStrain.sh
 
-The list_samples.txt provided contains 3 SRS ids - SRS016969, SRS020571, SRS020628. The shell script binStrain.sh will download the corresponding SRS raw reads from the ftp site of HMP and process the data and estimate the beta values. The results will be generated into a folder named Beta_Estimates.
+The example list_samples.txt file provided contains 3 SRS ids - SRS016969, SRS020571, SRS020628. The shell script binStrain.sh will download the corresponding SRS raw reads from the ftp site of HMP and process the data and estimate the beta values. The final beta estimates will be generated into a folder named Beta_Estimates.
+
+
+How to generate the SNP patern Matrix.
+
+        1. Generate a whole genome alignment from the selected reference genomes using ProgreesiveMauve (http://darlinglab.org/mauve/user-guide/introduction.html)
+        2. Use the "export SNPs" function in MAUVE to export the SNPs from the alignment.
+        3. Trim the positions where missing or gaps (-) are present at any of the SNP sites of the reference genomes in order to make sure we are getting the core SNPs.
+        4. Use the 
