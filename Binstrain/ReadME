@@ -20,7 +20,14 @@ awk
 Usage
 
 You need to have the following files in the same folder where you plan to run the analysis:
-
+        Functions_BinStrain.R (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/Functions_BinStrain.R)
+        ReferenceStrains.txt (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/ReferenceStrains.txt)
+        Scripts_R.R (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/Scripts_R.R)
+        Staph_ASR.fasta (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/Staph_ASR.fasta)
+        Staph_SNP_Pattern.txt (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/Staph_SNP_Pattern.txt_
+        list_samples.txt (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/list_samples.txt)
+        binStrain.sh (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/binStrain.sh)
+        
 
 
 Details https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/binStrain.sh
