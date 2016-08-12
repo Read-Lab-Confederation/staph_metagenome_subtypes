@@ -10,4 +10,17 @@ Description: Uses a binomial mixture model to describe the observed alternative 
         A well-established two step method is used to estimate the proportion of serovar strain-specific SNPs present in pure or mixed infection of genotypes. First step is a direct estimate by using the sparsity of the design matrix. Quadratic optimization method is involved in the second step.  Originally developed for direct sequencing of C. trachomatis from clinical samples.
 License: GPL-2
 
+Dependencies
+
+bwa
+samtools
+R-3-0.1
+awk
+
+Usage
+
+You need to have the following files in the same folder where you plan to run the analysis:
+
+
+
 Details https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/binStrain.sh
