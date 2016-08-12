@@ -28,6 +28,8 @@ You need to have the following files in the same folder where you plan to run th
         list_samples.txt (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/list_samples.txt)
         binStrain.sh (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/binStrain.sh)
         
+Details regarding each of the above scripts are commented out in the binStrain.sh shell script (https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/binStrain.sh)
 
+Example Usage
 
-Details https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/binStrain.sh
+If you want to download the raw
