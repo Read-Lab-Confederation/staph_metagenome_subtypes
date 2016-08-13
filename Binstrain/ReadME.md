@@ -8,7 +8,7 @@ Author: Sandeep J. Joseph and Ben Li
 
 Maintainer: Sandeep J. Joseph <sandeepjoseph@emory.edu> and Ben Li <ben.li@emory.edu>
 
-binstrain uses a binomial mixture model to describe the observed alternative allele (SNP) derived from prior comparative genomic analysis to estimate the proportion of 40 S. aureus subtypes in metagenome samples. The 2 main input files are the SNP pattern file that contains the position information on subtype-specific SNPs as well as SNPs shared by other subtypes and coverage counts at these SNP sites, obtained by reference mapping of the reads to a reference genome. A well-established two step method is used to estimate the proportion of serovar strain-specific SNPs present in pure or mixed infection of genotypes. First step is a direct estimate by using the sparsity of the design matrix. Quadratic optimization method is involved in the second step.  Originally developed for direct sequencing of C. trachomatis from clinical samples.
+binstrain uses a binomial mixture model to describe the observed alternative allele (SNP) derived from prior comparative genomic analysis to estimate the proportion of 40 *S. aureus* subtypes in metagenome samples. The 2 main input files are the SNP pattern file that contains the position information on subtype-specific SNPs as well as SNPs shared by other subtypes and coverage counts at these SNP sites, obtained by reference mapping of the reads to a reference genome. A well-established two step method is used to estimate the proportion of serovar strain-specific SNPs present in pure or mixed infection of genotypes. The first step is a direct estimate by using the sparsity of the design matrix followed by a quadratic optimization method.  
 
 License: GPL-2
 
