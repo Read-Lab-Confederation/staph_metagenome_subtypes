@@ -31,7 +31,7 @@ You need to have the following files in the same folder where you plan to run th
 
 *[Staph_ASR.fasta](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/Staph_ASR.fasta)
 
-*[Staph_SNP_Pattern.txt](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/Staph_SNP_Pattern.txt_
+*[v2 Staph_SNP_Pattern.txt](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/Staph_SNP_Pattern.txt)
 
 *[list_samples.txt](https://github.com/Read-Lab-Confederation/staph_metagenome_subtypes/blob/master/Binstrain/list_samples.txt)
 
