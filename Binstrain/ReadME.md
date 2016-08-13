@@ -34,7 +34,9 @@ Example Usage
 
 If you want to download the raw sequence data generated from Human Microbiome Project, you need to get the SRS id from HMP site (http://hmpdacc.org/HMASM/) and list the SRS ids in the file list_samples.txt.
 
-Then run the following command in the terminal ./binStrain.sh
+Then run the following command in the terminal
+
+    ./binStrain.sh
 
 The example list_samples.txt file provided contains 3 SRS ids - SRS016969, SRS020571, SRS020628. The shell script binStrain.sh will download the corresponding SRS raw reads from the ftp site of HMP and process the data and estimate the beta values. The final beta estimates will be generated into a folder named Beta_Estimates.
 
