@@ -41,9 +41,9 @@ Details regarding each of the above scripts are commented  [binStrain.sh shell s
 
 ###Running binstrain.sh
 
-binstrain.sh downloads the raw sequence data from the HMP based on its SRS ID [HMP site](http://hmpdacc.org/HMASM/) and list the SRS ids in the file list_samples.txt.  
+binstrain.sh downloads the raw sequence data from the HMP based on its SRS ID [HMP site](http://hmpdacc.org/HMASM/) and list the SRS ids in the file list_samples.txt.  (The script would need to be modified to run on other data sources, e.g local directory of fastq files).
 
-Then run the following command in the terminal 
+Run the following command in the terminal 
 
     ./binStrain.sh 
 
