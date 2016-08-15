@@ -43,7 +43,7 @@ Details regarding each of the above scripts are commented  [binStrain.sh shell s
 
 binstrain.sh downloads the raw sequence data from the HMP based on its SRS ID [HMP site](http://hmpdacc.org/HMASM/) and list the SRS ids in the file list_samples.txt.  
 
-Then run the following command in the terminal (assuming the list_samples.txt file is in your working directory)
+Then run the following command in the terminal 
 
     ./binStrain.sh 
 
