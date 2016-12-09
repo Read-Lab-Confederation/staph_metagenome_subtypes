@@ -5,7 +5,9 @@ Sandeep J, Joseph, Ben Li, Robert A. Petit III,  Zhaohui S. Qin,  Lyndsey A. Dar
 
 Emory University, Atlanta, Georgia
 
-[Prepint in BioArxiv](http://biorxiv.org/content/early/2015/11/05/030692)
+[Now published in *PeerJ*](https://peerj.com/articles/2571/)
+
+[Link to original repint in BioArxiv](http://biorxiv.org/content/early/2015/11/05/030692)
 
 This repo contains code, data, and knitr-produced markdown files 
 
