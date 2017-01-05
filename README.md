@@ -13,6 +13,8 @@ Partially supported by NIH grant AI121860.
 
 This repo contains code, data, and knitr-produced markdown files 
 
+ Here is the [Jekyll formatted version of the website](http://read-lab-confederation.github.io/staph_metagenome_subtypes/)
+
 ##Files
 
 Scripts for binstrain analysis
