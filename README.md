@@ -9,6 +9,8 @@ Emory University, Atlanta, Georgia
 
 [Link to original repint in BioArxiv](http://biorxiv.org/content/early/2015/11/05/030692)
 
+Partially supported by NIH grant AI121860.
+
 This repo contains code, data, and knitr-produced markdown files 
 
 ##Files
