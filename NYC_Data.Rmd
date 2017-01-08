@@ -74,6 +74,12 @@ staph_df_coords <- inner_join(NYCdata_SRA, staph_df, by = "Run") #one of the sam
 coords_df_subtype_mat <- make_subtype_matrix(staph_df_coords)
 ```
 
+
+```{r save data files}
+write.table(NYCdata_SRA,"./Data/NYCdata_SRA.tab")
+write.table(staph_df_coords,"./Data/staph_df_coords.tab")
+```
+
 #Subtype abundance
 ```{r subtype_abundance}
 
